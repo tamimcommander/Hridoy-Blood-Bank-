@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hridoy Blood Bank</title>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--bg:#f5f5f5;
+--card:#ffffff;
+--text:#222;
+--accent:#d9534f;
+}
+
+body.dark{
+background:#000;
+color:#fff;
+}
+
+body{
+font-family:'Inter',Arial;
+background:var(--bg);
+color:var(--text);
+margin:0;
+padding:15px;
+transition:0.3s;
+padding-bottom:60px;
+}
+
+/* HEADER */
+.header{
+text-align:center;
+font-weight:800;
+font-size:28px;
+color:#fff;
+padding:18px 10px;
+border-radius:14px;
+margin-bottom:15px;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(45deg,#d9534f,#ff3b3b,#b30000);
+}
+
+/* TOPBAR */
+.topbar{
+display:flex;
+justify-content:center;
+gap:8px;
+flex-wrap:wrap;
+margin-bottom:15px;
+}
+
+.topbar button{
+padding:8px 12px;
+border:none;
+border-radius:8px;
+font-weight:600;
+cursor:pointer;
+}
+
+.dashboard-btn{background:#28a745;color:#fff;}
+.admin-btn{background:#007bff;color:#fff;}
+
+/* CONTAINER */
+.container{
+max-width:520px;
+margin:auto;
+background:var(--card);
+padding:20px;
+border-radius:16px;
+}
+
+body.dark .container{background:#111;color:#fff;}
+
+/* INPUT */
+input,select{
+width:100%;
+padding:10px;
+margin-top:8px;
+border:1px solid #ddd;
+border-radius:8px;
+}
+
+button{
+padding:10px;
+border:none;
+border-radius:8px;
+font-weight:600;
+cursor:pointer;
+}
+
+.save-btn{width:100%;background:var(--accent);color:#fff;margin-top:8px;}
+
+.row{
+display:flex;
+gap:6px;
+margin-top:8px;
+}
+
+/* CARD */
+.donor-card{
+border-left:6px solid var(--accent);
+padding:15px;
+margin-top:12px;
+border-radius:14px;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+position:relative;
+}
+
+.blood{
+position:absolute;
+top:10px;
+right:10px;
+background:var(--accent);
+color:#fff;
+padding:4px 10px;
+border-radius:20px;
+font-size:12px;
+}
+
+/* BUTTONS */
+.call-btn{width:100%;background:#28a745;color:#fff;margin-top:8px;}
+.delete-btn{width:100%;background:#dc3545;color:#fff;margin-top:6px;}
+
+/* POPUP */
+.popup{
+position:fixed;
+top:0;left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+display:none;
+justify-content:center;
+align-items:center;
+}
+
+.popup-box{
+background:#fff;
+padding:18px;
+border-radius:15px;
+width:92%;
+max-width:380px;
+text-align:center;
+}
+
+body.dark .popup-box{background:#111;color:#fff;}
+
+/* DASHBOARD GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:8px;
+margin-top:10px;
+}
+
+.stat-box{
+padding:12px;
+border-radius:14px;
+font-size:13px;
+text-align:center;
+background:rgba(255,255,255,0.08);
+box-shadow:0 6px 15px rgba(0,0,0,0.15);
+border:1px solid rgba(255,255,255,0.1);
+transition:0.2s;
+}
+
+.stat-box b{
+display:block;
+font-size:16px;
+margin-top:5px;
+font-weight:800;
+}
+
+body.dark .stat-box{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+}
+
+.stat-box:hover{
+transform:translateY(-2px);
+}
+
+/* CLOSE */
+.close-btn{
+background:#dc3545;
+color:#fff;
+width:100%;
+margin-top:10px;
+}
+
+/* WATERMARK */
+.watermark{
+position:fixed;
+bottom:10px;
+left:0;
+width:100%;
+text-align:center;
+font-size:13px;
+opacity:0.6;
+pointer-events:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">🩸 Hridoy Blood Bank</div>
+
+<div class="topbar">
+<button class="dashboard-btn" onclick="openDashboard()">Dashboard</button>
+<button onclick="toggleDark()">🌙 Dark</button>
+<button class="admin-btn" onclick="openAdmin()">Admin</button>
+
+<button style="
+background:#0084ff;
+color:#fff;
+padding:8px 12px;
+border:none;
+border-radius:8px;
+font-weight:600;
+cursor:pointer;
+" onclick="window.open('https://m.me/j/AbbwNwnn9NjKLPTS/?send_source=gc%3Acopy_invite_link_c','_blank')">
+💬 Messenger Group
+</button>
+</div>
+
+<div class="container">
+
+<input id="name" placeholder="Donor Name">
+<input id="phone" placeholder="Phone Number">
+<input id="address" placeholder="Donor Address">
+
+<select id="bloodGroup">
+<option>A+</option><option>A-</option>
+<option>B+</option><option>B-</option>
+<option>O+</option><option>O-</option>
+<option>AB+</option><option>AB-</option>
+</select>
+
+<input id="lastDonate" type="date">
+
+<button class="save-btn" onclick="saveDonor()">Save Donor</button>
+
+<div class="row">
+<input id="search" placeholder="Search..." onkeyup="searchDonor()">
+</div>
+
+<div id="donorList"></div>
+
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="popup">
+<div class="popup-box">
+
+<h2>📊 Dashboard</h2>
+
+<div class="grid">
+<div class="stat-box">Total<b id="total">0</b></div>
+<div class="stat-box">Eligible<b id="eligible">0</b></div>
+<div class="stat-box">Not<b id="notEligible">0</b></div>
+
+<div class="stat-box">A+<b id="aplus">0</b></div>
+<div class="stat-box">A-<b id="aminus">0</b></div>
+<div class="stat-box">B+<b id="bplus">0</b></div>
+<div class="stat-box">B-<b id="bminus">0</b></div>
+<div class="stat-box">O+<b id="oplus">0</b></div>
+<div class="stat-box">O-<b id="ominus">0</b></div>
+<div class="stat-box">AB+<b id="abplus">0</b></div>
+<div class="stat-box">AB-<b id="abminus">0</b></div>
+</div>
+
+<button class="close-btn" onclick="closeDashboard()">Close</button>
+
+</div>
+</div>
+
+<!-- ADMIN -->
+<div id="admin" class="popup">
+<div class="popup-box">
+
+<h2>👨‍💼 Admin Panel</h2>
+
+<div style="text-align:left;line-height:1.8;margin-top:15px;">
+
+<div style="padding:12px;border-radius:12px;background:rgba(0,123,255,0.15);margin-bottom:10px;border-left:4px solid #007bff;">
+<b>🛠 Technical Support</b><br>
+Tamim Commander
+</div>
+
+<div style="padding:12px;border-radius:12px;background:rgba(40,167,69,0.15);margin-bottom:10px;border-left:4px solid #28a745;">
+<b>🏢 Management Support</b><br>
+Hridoy Ahmed Omor
+</div>
+
+<div style="padding:12px;border-radius:12px;background:rgba(255,193,7,0.15);margin-bottom:10px;border-left:4px solid #ffc107;">
+<b>🎧 Customer Support</b><br>
+Sayem Khan Arafat
+</div>
+
+</div>
+
+<button class="close-btn" onclick="closeAdmin()">Close</button>
+
+</div>
+</div>
+
+<!-- WATERMARK -->
+<div class="watermark">
+This website was developed by Tamim Commander (Admin)
+</div>
+
+<script>
+const firebaseConfig = {
+apiKey: "AIzaSyCDX-z22aHNgIO3dzm7iOPolCuT-XC_eA",
+databaseURL: "https://hridoy-blood-bank-bangla-ce1d3-default-rtdb.firebaseio.com"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+/* DARK */
+function toggleDark(){
+document.body.classList.toggle("dark");
+}
+
+/* DASHBOARD */
+function openDashboard(){
+document.getElementById("dashboard").style.display="flex";
+}
+function closeDashboard(){
+document.getElementById("dashboard").style.display="none";
+}
+
+/* ADMIN */
+function openAdmin(){
+document.getElementById("admin").style.display="flex";
+}
+function closeAdmin(){
+document.getElementById("admin").style.display="none";
+}
+
+/* SAVE */
+function saveDonor(){
+let name=document.getElementById("name").value.trim();
+let phone=document.getElementById("phone").value.trim();
+let address=document.getElementById("address").value.trim();
+let group=document.getElementById("bloodGroup").value;
+let lastDonate=document.getElementById("lastDonate").value || "";
+
+if(!name||!phone||!address){
+alert("Fill all fields!");
+return;
+}
+
+db.ref("donors").push({
+name,phone,address,group,lastDonate,time:Date.now()
+});
+
+document.getElementById("name").value="";
+document.getElementById("phone").value="";
+document.getElementById("address").value="";
+document.getElementById("lastDonate").value="";
+}
+
+/* LOAD */
+db.ref("donors").on("value",snap=>{
+let list=document.getElementById("donorList");
+list.innerHTML="";
+
+let total=0,eligible=0,notEligible=0;
+let aplus=0,aminus=0,bplus=0,bminus=0,oplus=0,ominus=0,abplus=0,abminus=0;
+
+snap.forEach(c=>{
+let d=c.val();
+total++;
+
+if(d.group==="A+") aplus++;
+if(d.group==="A-") aminus++;
+if(d.group==="B+") bplus++;
+if(d.group==="B-") bminus++;
+if(d.group==="O+") oplus++;
+if(d.group==="O-") ominus++;
+if(d.group==="AB+") abplus++;
+if(d.group==="AB-") abminus++;
+
+if(d.lastDonate){
+let diff=Math.floor((Date.now()-new Date(d.lastDonate))/(1000*60*60*24));
+if(diff>=90) eligible++;
+else notEligible++;
+}else{
+notEligible++;
+}
+
+list.innerHTML+=`
+<div class="donor-card">
+<div class="blood">${d.group}</div>
+
+<b>${d.name}</b><br>
+📍 ${d.address}<br>
+📅 ${d.lastDonate || "Not added"}<br>
+
+<button class="call-btn" onclick="window.location='tel:${d.phone}'">Call</button>
+<button class="delete-btn" onclick="deleteDonor('${c.key}')">Delete</button>
+</div>`;
+});
+
+document.getElementById("total").innerText=total;
+document.getElementById("eligible").innerText=eligible;
+document.getElementById("notEligible").innerText=notEligible;
+
+document.getElementById("aplus").innerText=aplus;
+document.getElementById("aminus").innerText=aminus;
+document.getElementById("bplus").innerText=bplus;
+document.getElementById("bminus").innerText=bminus;
+document.getElementById("oplus").innerText=oplus;
+document.getElementById("ominus").innerText=ominus;
+document.getElementById("abplus").innerText=abplus;
+document.getElementById("abminus").innerText=abminus;
+});
+
+/* DELETE */
+function deleteDonor(key){
+if(prompt("Password?")==="3358"){
+db.ref("donors/"+key).remove();
+}
+}
+
+/* SEARCH FIX */
+function searchDonor(){
+let v=document.getElementById("search").value.trim().toUpperCase();
+
+document.querySelectorAll(".donor-card").forEach(c=>{
+let blood=c.querySelector(".blood").innerText.trim().toUpperCase();
+
+if(blood===v || c.innerText.toLowerCase().includes(v.toLowerCase())){
+c.style.display="";
+}else{
+c.style.display="none";
+}
+});
+}
+</script>
+
+</body>
+</html>
