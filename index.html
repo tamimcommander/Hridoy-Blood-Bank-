@@ -86,6 +86,14 @@ border:1px solid #ddd;
 border-radius:8px;
 }
 
+label{
+display:block;
+margin-top:10px;
+font-weight:600;
+font-size:14px;
+opacity:0.9;
+}
+
 button{
 padding:10px;
 border:none;
@@ -216,15 +224,8 @@ pointer-events:none;
 <button onclick="toggleDark()">🌙 Dark</button>
 <button class="admin-btn" onclick="openAdmin()">Admin</button>
 
-<button style="
-background:#0084ff;
-color:#fff;
-padding:8px 12px;
-border:none;
-border-radius:8px;
-font-weight:600;
-cursor:pointer;
-" onclick="window.open('https://m.me/j/AbbwNwnn9NjKLPTS/?send_source=gc%3Acopy_invite_link_c','_blank')">
+<button style="background:#0084ff;color:#fff;padding:8px 12px;border:none;border-radius:8px;font-weight:600;cursor:pointer;"
+onclick="window.open('https://m.me/j/AbbwNwnn9NjKLPTS/?send_source=gc%3Acopy_invite_link_c','_blank')">
 💬 Messenger Group
 </button>
 </div>
@@ -242,6 +243,7 @@ cursor:pointer;
 <option>AB+</option><option>AB-</option>
 </select>
 
+<label>Last Donate (Optional)</label>
 <input id="lastDonate" type="date">
 
 <button class="save-btn" onclick="saveDonor()">Save Donor</button>
@@ -288,19 +290,34 @@ cursor:pointer;
 
 <div style="text-align:left;line-height:1.8;margin-top:15px;">
 
+<!-- Technical -->
 <div style="padding:12px;border-radius:12px;background:rgba(0,123,255,0.15);margin-bottom:10px;border-left:4px solid #007bff;">
 <b>🛠 Technical Support</b><br>
+<div style="display:flex;align-items:center;gap:8px;">
+<img src="https://i.ibb.co.com/3mGv4YyK/FB-IMG-1776482627543.jpg"
+style="width:35px;height:35px;border-radius:50%;object-fit:cover;">
 Tamim Commander
 </div>
-
-<div style="padding:12px;border-radius:12px;background:rgba(40,167,69,0.15);margin-bottom:10px;border-left:4px solid #28a745;">
-<b>🏢 Management Support</b><br>
-Hridoy Ahmed Omor
 </div>
 
+<!-- Management -->
+<div style="padding:12px;border-radius:12px;background:rgba(40,167,69,0.15);margin-bottom:10px;border-left:4px solid #28a745;">
+<b>🏢 Management Support</b><br>
+<div style="display:flex;align-items:center;gap:8px;">
+<img src="https://i.ibb.co.com/LDdPdJBL/Screenshot-20260418-095221.png"
+style="width:35px;height:35px;border-radius:50%;object-fit:cover;">
+Hridoy Ahmed Omor
+</div>
+</div>
+
+<!-- Service -->
 <div style="padding:12px;border-radius:12px;background:rgba(255,193,7,0.15);margin-bottom:10px;border-left:4px solid #ffc107;">
-<b>🎧 Customer Support</b><br>
+<b>🛠 Service Support</b><br>
+<div style="display:flex;align-items:center;gap:8px;">
+<img src="https://i.ibb.co.com/kscvchHV/FB-IMG-1776483729557.jpg"
+style="width:35px;height:35px;border-radius:50%;object-fit:cover;">
 Sayem Khan Arafat
+</div>
 </div>
 
 </div>
@@ -310,7 +327,6 @@ Sayem Khan Arafat
 </div>
 </div>
 
-<!-- WATERMARK -->
 <div class="watermark">
 This website was developed by Tamim Commander (Admin)
 </div>
@@ -324,12 +340,10 @@ databaseURL: "https://hridoy-blood-bank-bangla-ce1d3-default-rtdb.firebaseio.com
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-/* DARK */
 function toggleDark(){
 document.body.classList.toggle("dark");
 }
 
-/* DASHBOARD */
 function openDashboard(){
 document.getElementById("dashboard").style.display="flex";
 }
@@ -337,7 +351,6 @@ function closeDashboard(){
 document.getElementById("dashboard").style.display="none";
 }
 
-/* ADMIN */
 function openAdmin(){
 document.getElementById("admin").style.display="flex";
 }
@@ -345,7 +358,6 @@ function closeAdmin(){
 document.getElementById("admin").style.display="none";
 }
 
-/* SAVE */
 function saveDonor(){
 let name=document.getElementById("name").value.trim();
 let phone=document.getElementById("phone").value.trim();
@@ -368,7 +380,6 @@ document.getElementById("address").value="";
 document.getElementById("lastDonate").value="";
 }
 
-/* LOAD */
 db.ref("donors").on("value",snap=>{
 let list=document.getElementById("donorList");
 list.innerHTML="";
@@ -400,7 +411,6 @@ notEligible++;
 list.innerHTML+=`
 <div class="donor-card">
 <div class="blood">${d.group}</div>
-
 <b>${d.name}</b><br>
 📍 ${d.address}<br>
 📅 ${d.lastDonate || "Not added"}<br>
@@ -424,25 +434,16 @@ document.getElementById("abplus").innerText=abplus;
 document.getElementById("abminus").innerText=abminus;
 });
 
-/* DELETE */
 function deleteDonor(key){
 if(prompt("Password?")==="3358"){
 db.ref("donors/"+key).remove();
 }
 }
 
-/* SEARCH FIX */
 function searchDonor(){
-let v=document.getElementById("search").value.trim().toUpperCase();
-
+let v=document.getElementById("search").value.toLowerCase();
 document.querySelectorAll(".donor-card").forEach(c=>{
-let blood=c.querySelector(".blood").innerText.trim().toUpperCase();
-
-if(blood===v || c.innerText.toLowerCase().includes(v.toLowerCase())){
-c.style.display="";
-}else{
-c.style.display="none";
-}
+c.style.display=c.innerText.toLowerCase().includes(v)?"":"none";
 });
 }
 </script>
