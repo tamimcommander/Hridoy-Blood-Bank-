@@ -135,7 +135,62 @@ font-size:12px;
 .call-btn{width:100%;background:#28a745;color:#fff;margin-top:8px;}
 .delete-btn{width:100%;background:#dc3545;color:#fff;margin-top:6px;}
 
-/* POPUP */
+/* MAIN POPUP (Alert) */
+.promo-popup{
+position:fixed;
+top:0;left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.7);
+display:none; /* Initially Hidden */
+justify-content:center;
+align-items:center;
+z-index: 10000;
+}
+
+.promo-content {
+  background: white;
+  padding: 20px;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 15px;
+  text-align: left;
+  position: relative;
+  animation: popIn 0.4s ease;
+}
+
+body.dark .promo-content { background: #1a1a1a; color: #fff; }
+
+.promo-content h2 { text-align: center; color: #d9534f; margin-top: 0; }
+.promo-content b { color: #d9534f; }
+
+.promo-content button {
+  width: 100%;
+  padding: 12px;
+  background: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  margin-top: 15px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.close-x {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 25px;
+  cursor: pointer;
+  color: #888;
+}
+
+@keyframes popIn {
+  from {transform: scale(0.8); opacity: 0;}
+  to {transform: scale(1); opacity: 1;}
+}
+
+/* DASHBOARD & ADMIN POPUPS */
 .popup{
 position:fixed;
 top:0;left:0;
@@ -145,6 +200,7 @@ background:rgba(0,0,0,0.6);
 display:none;
 justify-content:center;
 align-items:center;
+z-index: 999;
 }
 
 .popup-box{
@@ -217,6 +273,25 @@ pointer-events:none;
 
 <body>
 
+<div id="promoPopup" class="promo-popup">
+  <div class="promo-content">
+    <span class="close-x" onclick="closePromo()">&times;</span>
+    
+    <h2>রক্ত দিন, জীবন বাঁচান</h2>
+
+    <p><b>🩸 রক্তদানের গুরুত্ব:</b><br>
+    • ১ ব্যাগ রক্ত ৩ জন মানুষের জীবন বাঁচাতে পারে<br>
+    • রক্তদান মানবতার সর্বোচ্চ উদাহরণ</p>
+
+    <p><b>💪 উপকারিতা:</b> নতুন রক্ত তৈরি ও হৃদরোগের ঝুঁকি কমায়।</p>
+
+    <p><b>⚠️ শর্ত:</b> ১৮-৬০ বছর, ওজন কমপক্ষে ৫০ কেজি এবং ৩ মাস পর পর।</p>
+
+    <p style="text-align:center;">👉 <b>আপনার ১০ মিনিট = কারো নতুন জীবন ❤️</b></p>
+
+    <button onclick="closePromo()">আমি সাহায্য করবো</button>
+  </div>
+</div>
 <div class="header">🩸 Hridoy Blood Bank</div>
 
 <div class="topbar">
@@ -256,17 +331,13 @@ onclick="window.open('https://m.me/j/AbbwNwnn9NjKLPTS/?send_source=gc%3Acopy_inv
 
 </div>
 
-<!-- DASHBOARD -->
 <div id="dashboard" class="popup">
 <div class="popup-box">
-
 <h2>📊 Dashboard</h2>
-
-<div class="grid">
+<div class="grid" id="statGrid">
 <div class="stat-box">Total<b id="total">0</b></div>
 <div class="stat-box">Eligible<b id="eligible">0</b></div>
 <div class="stat-box">Not<b id="notEligible">0</b></div>
-
 <div class="stat-box">A+<b id="aplus">0</b></div>
 <div class="stat-box">A-<b id="aminus">0</b></div>
 <div class="stat-box">B+<b id="bplus">0</b></div>
@@ -276,60 +347,41 @@ onclick="window.open('https://m.me/j/AbbwNwnn9NjKLPTS/?send_source=gc%3Acopy_inv
 <div class="stat-box">AB+<b id="abplus">0</b></div>
 <div class="stat-box">AB-<b id="abminus">0</b></div>
 </div>
-
 <button class="close-btn" onclick="closeDashboard()">Close</button>
-
 </div>
 </div>
 
-<!-- ADMIN -->
 <div id="admin" class="popup">
 <div class="popup-box">
-
 <h2>👨‍💼 Admin Panel</h2>
-
 <div style="text-align:left;line-height:1.8;margin-top:15px;">
-
-<!-- Technical -->
 <div style="padding:12px;border-radius:12px;background:rgba(0,123,255,0.15);margin-bottom:10px;border-left:4px solid #007bff;">
 <b>🛠 Technical Support</b><br>
 <div style="display:flex;align-items:center;gap:8px;">
-<img src="https://i.ibb.co.com/3mGv4YyK/FB-IMG-1776482627543.jpg"
-style="width:35px;height:35px;border-radius:50%;object-fit:cover;">
+<img src="https://i.ibb.co.com/3mGv4YyK/FB-IMG-1776482627543.jpg" style="width:35px;height:35px;border-radius:50%;object-fit:cover;">
 Tamim Commander
 </div>
 </div>
-
-<!-- Management -->
 <div style="padding:12px;border-radius:12px;background:rgba(40,167,69,0.15);margin-bottom:10px;border-left:4px solid #28a745;">
 <b>🏢 Management Support</b><br>
 <div style="display:flex;align-items:center;gap:8px;">
-<img src="https://i.ibb.co.com/LDdPdJBL/Screenshot-20260418-095221.png"
-style="width:35px;height:35px;border-radius:50%;object-fit:cover;">
+<img src="https://i.ibb.co.com/LDdPdJBL/Screenshot-20260418-095221.png" style="width:35px;height:35px;border-radius:50%;object-fit:cover;">
 Hridoy Ahmed Omor
 </div>
 </div>
-
-<!-- Service -->
 <div style="padding:12px;border-radius:12px;background:rgba(255,193,7,0.15);margin-bottom:10px;border-left:4px solid #ffc107;">
 <b>🛠 Service Support</b><br>
 <div style="display:flex;align-items:center;gap:8px;">
-<img src="https://i.ibb.co.com/kscvchHV/FB-IMG-1776483729557.jpg"
-style="width:35px;height:35px;border-radius:50%;object-fit:cover;">
+<img src="https://i.ibb.co.com/kscvchHV/FB-IMG-1776483729557.jpg" style="width:35px;height:35px;border-radius:50%;object-fit:cover;">
 Sayem Khan Arafat
 </div>
 </div>
-
 </div>
-
 <button class="close-btn" onclick="closeAdmin()">Close</button>
-
 </div>
 </div>
 
-<div class="watermark">
-This website was developed by Tamim Commander (Admin)
-</div>
+<div class="watermark">This website was developed by Tamim Commander (Admin)</div>
 
 <script>
 const firebaseConfig = {
@@ -339,6 +391,17 @@ databaseURL: "https://hridoy-blood-bank-bangla-ce1d3-default-rtdb.firebaseio.com
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
+
+// POPUP FUNCTIONS
+window.addEventListener('load', function() {
+  setTimeout(() => {
+    document.getElementById("promoPopup").style.display = "flex";
+  }, 1000); // পেজ লোড হওয়ার ১ সেকেন্ড পর দেখাবে
+});
+
+function closePromo() {
+  document.getElementById("promoPopup").style.display = "none";
+}
 
 function toggleDark(){
 document.body.classList.toggle("dark");
@@ -383,30 +446,18 @@ document.getElementById("lastDonate").value="";
 db.ref("donors").on("value",snap=>{
 let list=document.getElementById("donorList");
 list.innerHTML="";
-
 let total=0,eligible=0,notEligible=0;
-let aplus=0,aminus=0,bplus=0,bminus=0,oplus=0,ominus=0,abplus=0,abminus=0;
+let counts = {"A+":0,"A-":0,"B+":0,"B-":0,"O+":0,"O-":0,"AB+":0,"AB-":0};
 
 snap.forEach(c=>{
 let d=c.val();
 total++;
-
-if(d.group==="A+") aplus++;
-if(d.group==="A-") aminus++;
-if(d.group==="B+") bplus++;
-if(d.group==="B-") bminus++;
-if(d.group==="O+") oplus++;
-if(d.group==="O-") ominus++;
-if(d.group==="AB+") abplus++;
-if(d.group==="AB-") abminus++;
+if(counts.hasOwnProperty(d.group)) counts[d.group]++;
 
 if(d.lastDonate){
 let diff=Math.floor((Date.now()-new Date(d.lastDonate))/(1000*60*60*24));
-if(diff>=90) eligible++;
-else notEligible++;
-}else{
-notEligible++;
-}
+if(diff>=90) eligible++; else notEligible++;
+}else{ eligible++; }
 
 list.innerHTML+=`
 <div class="donor-card">
@@ -414,7 +465,6 @@ list.innerHTML+=`
 <b>${d.name}</b><br>
 📍 ${d.address}<br>
 📅 ${d.lastDonate || "Not added"}<br>
-
 <button class="call-btn" onclick="window.location='tel:${d.phone}'">Call</button>
 <button class="delete-btn" onclick="deleteDonor('${c.key}')">Delete</button>
 </div>`;
@@ -423,15 +473,14 @@ list.innerHTML+=`
 document.getElementById("total").innerText=total;
 document.getElementById("eligible").innerText=eligible;
 document.getElementById("notEligible").innerText=notEligible;
-
-document.getElementById("aplus").innerText=aplus;
-document.getElementById("aminus").innerText=aminus;
-document.getElementById("bplus").innerText=bplus;
-document.getElementById("bminus").innerText=bminus;
-document.getElementById("oplus").innerText=oplus;
-document.getElementById("ominus").innerText=ominus;
-document.getElementById("abplus").innerText=abplus;
-document.getElementById("abminus").innerText=abminus;
+document.getElementById("aplus").innerText=counts["A+"];
+document.getElementById("aminus").innerText=counts["A-"];
+document.getElementById("bplus").innerText=counts["B+"];
+document.getElementById("bminus").innerText=counts["B-"];
+document.getElementById("oplus").innerText=counts["O+"];
+document.getElementById("ominus").innerText=counts["O-"];
+document.getElementById("abplus").innerText=counts["AB+"];
+document.getElementById("abminus").innerText=counts["AB-"];
 });
 
 function deleteDonor(key){
