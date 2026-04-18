@@ -77,13 +77,53 @@ border-radius:16px;
 
 body.dark .container{background:#111;color:#fff;}
 
-/* INPUT */
+/* INPUTS */
 input,select{
 width:100%;
 padding:10px;
 margin-top:8px;
 border:1px solid #ddd;
 border-radius:8px;
+box-sizing: border-box;
+}
+
+/* HIGHLIGHTED SEARCH BAR */
+.search-container {
+    margin-top: 20px;
+    position: relative;
+    width: 100%;
+}
+
+#search {
+    width: 100%;
+    padding: 14px 15px 14px 45px;
+    border: 2.5px solid var(--accent);
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    background: var(--card);
+    box-shadow: 0 4px 15px rgba(217, 83, 79, 0.2);
+    transition: 0.3s;
+    outline: none;
+}
+
+#search:focus {
+    box-shadow: 0 4px 25px rgba(217, 83, 79, 0.4);
+    transform: translateY(-2px);
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+
+body.dark #search {
+    background: #222;
+    color: #fff;
+    border-color: #ff4d4d;
 }
 
 label{
@@ -104,13 +144,7 @@ cursor:pointer;
 
 .save-btn{width:100%;background:var(--accent);color:#fff;margin-top:8px;}
 
-.row{
-display:flex;
-gap:6px;
-margin-top:8px;
-}
-
-/* CARD */
+/* CARDS */
 .donor-card{
 border-left:6px solid var(--accent);
 padding:15px;
@@ -131,130 +165,72 @@ border-radius:20px;
 font-size:12px;
 }
 
-/* BUTTONS */
 .call-btn{width:100%;background:#28a745;color:#fff;margin-top:8px;}
 .delete-btn{width:100%;background:#dc3545;color:#fff;margin-top:6px;}
 
-/* MAIN POPUP (Alert) */
-.promo-popup{
+/* POPUPS GENERAL */
+.popup{
 position:fixed;
 top:0;left:0;
 width:100%;
 height:100%;
 background:rgba(0,0,0,0.7);
-display:none; /* Initially Hidden */
+display:none;
 justify-content:center;
 align-items:center;
 z-index: 10000;
 }
 
-.promo-content {
-  background: white;
-  padding: 20px;
-  width: 90%;
-  max-width: 400px;
-  border-radius: 15px;
-  text-align: left;
-  position: relative;
-  animation: popIn 0.4s ease;
+.popup-box{
+background:#fff;
+padding:25px;
+border-radius:20px;
+width:92%;
+max-width:400px;
+text-align:center;
+position: relative;
+animation: popIn 0.4s ease;
 }
 
-body.dark .promo-content { background: #1a1a1a; color: #fff; }
-
-.promo-content h2 { text-align: center; color: #d9534f; margin-top: 0; }
-.promo-content b { color: #d9534f; }
-
-.promo-content button {
-  width: 100%;
-  padding: 12px;
-  background: #d9534f;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  margin-top: 15px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.close-x {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 25px;
-  cursor: pointer;
-  color: #888;
-}
+body.dark .popup-box{background:#1a1a1a;color:#fff;}
 
 @keyframes popIn {
   from {transform: scale(0.8); opacity: 0;}
   to {transform: scale(1); opacity: 1;}
 }
 
-/* DASHBOARD & ADMIN POPUPS */
-.popup{
-position:fixed;
-top:0;left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.6);
-display:none;
-justify-content:center;
-align-items:center;
-z-index: 999;
+/* ADMIN PANEL STYLING */
+.admin-card {
+    background: rgba(0, 0, 0, 0.03);
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+    border: 1px solid rgba(0,0,0,0.05);
 }
 
-.popup-box{
-background:#fff;
-padding:18px;
-border-radius:15px;
-width:92%;
-max-width:380px;
-text-align:center;
+body.dark .admin-card { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+
+.admin-img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
-body.dark .popup-box{background:#111;color:#fff;}
-
-/* DASHBOARD GRID */
-.grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:8px;
-margin-top:10px;
-}
-
-.stat-box{
-padding:12px;
-border-radius:14px;
-font-size:13px;
-text-align:center;
-background:rgba(255,255,255,0.08);
-box-shadow:0 6px 15px rgba(0,0,0,0.15);
-border:1px solid rgba(255,255,255,0.1);
-transition:0.2s;
-}
-
-.stat-box b{
-display:block;
-font-size:16px;
-margin-top:5px;
-font-weight:800;
-}
-
-body.dark .stat-box{
-background:rgba(255,255,255,0.05);
-border:1px solid rgba(255,255,255,0.08);
-}
-
-.stat-box:hover{
-transform:translateY(-2px);
-}
-
-/* CLOSE */
-.close-btn{
-background:#dc3545;
-color:#fff;
-width:100%;
-margin-top:10px;
+.contact-mini-btn {
+    display: inline-block;
+    margin-top: 5px;
+    padding: 5px 12px;
+    background: var(--accent);
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+    border-radius: 20px;
+    font-weight: 600;
 }
 
 /* WATERMARK */
@@ -268,45 +244,51 @@ font-size:13px;
 opacity:0.6;
 pointer-events:none;
 }
+
+.close-x {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 25px;
+  cursor: pointer;
+  color: #888;
+}
+
+.close-btn{background:#dc3545; color:#fff; width:100%; margin-top:10px;}
 </style>
 </head>
 
 <body>
 
-<div id="promoPopup" class="promo-popup">
-  <div class="promo-content">
+<div id="promoPopup" class="popup">
+  <div class="popup-box">
     <span class="close-x" onclick="closePromo()">&times;</span>
-    
-    <h2>রক্ত দিন, জীবন বাঁচান</h2>
+    <h2 style="color:#d9534f; margin-top:0;">রক্ত দিন, জীবন বাঁচান</h2>
+    <div style="text-align:center; font-size:14px; line-height: 1.6;">
+      <p><b>🩸 ১ ব্যাগ রক্ত ৩ জন মানুষের জীবন বাঁচাতে পারে।</b></p>
+      
+      <p><b>🧠 আপনি কি জানেন?</b><br>
+      রক্তদান করলে শরীরে আয়রনের ভারসাম্য ঠিক থাকে এবং ক্যান্সার হওয়ার ঝুঁকি কমে। নিয়মিত রক্তদান করলে অস্থিমজ্জা সজীব থাকে যা নতুন রক্তকণিকা তৈরিতে সাহায্য করে।</p>
+      
+      <p><b>💪 মানসিক প্রশান্তি:</b><br>
+      এক গবেষণায় দেখা গেছে, নিঃস্বার্থভাবে কারো সাহায্য করলে মানসিক অবসাদ ও স্ট্রেস দ্রুত কমে যায়।</p>
 
-    <p><b>🩸 রক্তদানের গুরুত্ব:</b><br>
-    • ১ ব্যাগ রক্ত ৩ জন মানুষের জীবন বাঁচাতে পারে<br>
-    • রক্তদান মানবতার সর্বোচ্চ উদাহরণ</p>
-
-    <p><b>💪 উপকারিতা:</b> নতুন রক্ত তৈরি ও হৃদরোগের ঝুঁকি কমায়।</p>
-
-    <p><b>⚠️ শর্ত:</b> ১৮-৬০ বছর, ওজন কমপক্ষে ৫০ কেজি এবং ৩ মাস পর পর।</p>
-
-    <p style="text-align:center;">👉 <b>আপনার ১০ মিনিট = কারো নতুন জীবন ❤️</b></p>
-
-    <button onclick="closePromo()">আমি সাহায্য করবো</button>
+      <p style="color: #d9534f;">👉 <b>আপনার ১০ মিনিট = কারো নতুন জীবন ❤️</b></p>
+    </div>
+    <button class="save-btn" style="padding:12px; font-size:16px;" onclick="closePromo()">আমি সাহায্য করবো</button>
   </div>
 </div>
+
 <div class="header">🩸 Hridoy Blood Bank</div>
 
 <div class="topbar">
 <button class="dashboard-btn" onclick="openDashboard()">Dashboard</button>
 <button onclick="toggleDark()">🌙 Dark</button>
 <button class="admin-btn" onclick="openAdmin()">Admin</button>
-
-<button style="background:#0084ff;color:#fff;padding:8px 12px;border:none;border-radius:8px;font-weight:600;cursor:pointer;"
-onclick="window.open('https://m.me/j/AbbwNwnn9NjKLPTS/?send_source=gc%3Acopy_invite_link_c','_blank')">
-💬 Messenger Group
-</button>
+<button style="background:#0084ff;color:#fff;" onclick="window.open('https://m.me/j/AbbwNwnn9NjKLPTS/','_blank')">💬 Group</button>
 </div>
 
 <div class="container">
-
 <input id="name" placeholder="Donor Name">
 <input id="phone" placeholder="Phone Number">
 <input id="address" placeholder="Donor Address">
@@ -323,29 +305,32 @@ onclick="window.open('https://m.me/j/AbbwNwnn9NjKLPTS/?send_source=gc%3Acopy_inv
 
 <button class="save-btn" onclick="saveDonor()">Save Donor</button>
 
-<div class="row">
-<input id="search" placeholder="Search..." onkeyup="searchDonor()">
+<div class="search-container">
+    <span class="search-icon">🔍</span>
+    <input id="search" placeholder="Search by name or blood group..." onkeyup="searchDonor()">
 </div>
 
 <div id="donorList"></div>
-
 </div>
 
 <div id="dashboard" class="popup">
 <div class="popup-box">
 <h2>📊 Dashboard</h2>
-<div class="grid" id="statGrid">
-<div class="stat-box">Total<b id="total">0</b></div>
-<div class="stat-box">Eligible<b id="eligible">0</b></div>
-<div class="stat-box">Not<b id="notEligible">0</b></div>
-<div class="stat-box">A+<b id="aplus">0</b></div>
-<div class="stat-box">A-<b id="aminus">0</b></div>
-<div class="stat-box">B+<b id="bplus">0</b></div>
-<div class="stat-box">B-<b id="bminus">0</b></div>
-<div class="stat-box">O+<b id="oplus">0</b></div>
-<div class="stat-box">O-<b id="ominus">0</b></div>
-<div class="stat-box">AB+<b id="abplus">0</b></div>
-<div class="stat-box">AB-<b id="abminus">0</b></div>
+<div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; font-size:12px;">
+<div style="background:#eee; padding:10px; border-radius:10px; color:#000;">Total<b id="total" style="display:block; font-size:16px;">0</b></div>
+<div style="background:#d4edda; padding:10px; border-radius:10px; color:#000;">Eligible<b id="eligible" style="display:block; font-size:16px;">0</b></div>
+<div style="background:#f8d7da; padding:10px; border-radius:10px; color:#000;">Not<b id="notEligible" style="display:block; font-size:16px;">0</b></div>
+</div>
+<hr style="margin:15px 0; opacity:0.2;">
+<div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:8px;">
+<div style="opacity:0.8;">A+ <br><b id="aplus">0</b></div>
+<div style="opacity:0.8;">A- <br><b id="aminus">0</b></div>
+<div style="opacity:0.8;">B+ <br><b id="bplus">0</b></div>
+<div style="opacity:0.8;">B- <br><b id="bminus">0</b></div>
+<div style="opacity:0.8;">O+ <br><b id="oplus">0</b></div>
+<div style="opacity:0.8;">O- <br><b id="ominus">0</b></div>
+<div style="opacity:0.8;">AB+ <br><b id="abplus">0</b></div>
+<div style="opacity:0.8;">AB- <br><b id="abminus">0</b></div>
 </div>
 <button class="close-btn" onclick="closeDashboard()">Close</button>
 </div>
@@ -353,35 +338,41 @@ onclick="window.open('https://m.me/j/AbbwNwnn9NjKLPTS/?send_source=gc%3Acopy_inv
 
 <div id="admin" class="popup">
 <div class="popup-box">
-<h2>👨‍💼 Admin Panel</h2>
-<div style="text-align:left;line-height:1.8;margin-top:15px;">
-<div style="padding:12px;border-radius:12px;background:rgba(0,123,255,0.15);margin-bottom:10px;border-left:4px solid #007bff;">
-<b>🛠 Technical Support</b><br>
-<div style="display:flex;align-items:center;gap:8px;">
-<img src="https://i.ibb.co.com/3mGv4YyK/FB-IMG-1776482627543.jpg" style="width:35px;height:35px;border-radius:50%;object-fit:cover;">
-Tamim Commander
-</div>
-</div>
-<div style="padding:12px;border-radius:12px;background:rgba(40,167,69,0.15);margin-bottom:10px;border-left:4px solid #28a745;">
-<b>🏢 Management Support</b><br>
-<div style="display:flex;align-items:center;gap:8px;">
-<img src="https://i.ibb.co.com/LDdPdJBL/Screenshot-20260418-095221.png" style="width:35px;height:35px;border-radius:50%;object-fit:cover;">
-Hridoy Ahmed Omor
-</div>
-</div>
-<div style="padding:12px;border-radius:12px;background:rgba(255,193,7,0.15);margin-bottom:10px;border-left:4px solid #ffc107;">
-<b>🛠 Service Support</b><br>
-<div style="display:flex;align-items:center;gap:8px;">
-<img src="https://i.ibb.co.com/kscvchHV/FB-IMG-1776483729557.jpg" style="width:35px;height:35px;border-radius:50%;object-fit:cover;">
-Sayem Khan Arafat
-</div>
-</div>
-</div>
-<button class="close-btn" onclick="closeAdmin()">Close</button>
+    <h2 style="color: var(--accent); margin-bottom:5px;">👨🏻‍💻 আমাদের টীম 👨🏻‍💻</h2>
+    <p style="font-size: 13px; opacity: 0.7; margin-bottom:20px;">মানবতার সেবায় আমরা সব সময় আপনার পাশে।</p>
+
+    <div class="admin-card">
+        <img src="https://i.ibb.co.com/3mGv4YyK/FB-IMG-1776482627543.jpg" class="admin-img" style="border: 2px solid #007bff;">
+        <div>
+            <b style="color:#007bff;">Tamim Commander</b><br>
+            <small>Technical Support</small><br>
+            <a href="tel:01707493733" class="contact-mini-btn" style="background:#007bff;">Call: 01707493733</a>
+        </div>
+    </div>
+
+    <div class="admin-card">
+        <img src="https://i.ibb.co.com/LDdPdJBL/Screenshot-20260418-095221.png" class="admin-img" style="border: 2px solid #28a745;">
+        <div>
+            <b style="color:#28a745;">Hridoy Ahmed Omor</b><br>
+            <small>Management Support</small><br>
+            <a href="tel:01997545658" class="contact-mini-btn" style="background:#28a745;">Call: 01997545658</a>
+        </div>
+    </div>
+
+    <div class="admin-card">
+        <img src="https://i.ibb.co.com/kscvchHV/FB-IMG-1776483729557.jpg" class="admin-img" style="border: 2px solid #ff9800;">
+        <div>
+            <b style="color:#e68a00;">Sayem Khan Arafat</b><br>
+            <small>Service Support</small><br>
+            <a href="tel:01826168177" class="contact-mini-btn" style="background:#ff9800;">Call: 01826168177</a>
+        </div>
+    </div>
+
+    <button class="close-btn" onclick="closeAdmin()">বন্ধ করুন</button>
 </div>
 </div>
 
-<div class="watermark">This website was developed by Tamim Commander (Admin)</div>
+<div class="watermark">Developed by Tamim Commander (Admin)</div>
 
 <script>
 const firebaseConfig = {
@@ -392,34 +383,17 @@ databaseURL: "https://hridoy-blood-bank-bangla-ce1d3-default-rtdb.firebaseio.com
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// POPUP FUNCTIONS
+// AUTO SHOW POPUP
 window.addEventListener('load', function() {
-  setTimeout(() => {
-    document.getElementById("promoPopup").style.display = "flex";
-  }, 1000); // পেজ লোড হওয়ার ১ সেকেন্ড পর দেখাবে
+  setTimeout(() => { document.getElementById("promoPopup").style.display = "flex"; }, 1500);
 });
 
-function closePromo() {
-  document.getElementById("promoPopup").style.display = "none";
-}
-
-function toggleDark(){
-document.body.classList.toggle("dark");
-}
-
-function openDashboard(){
-document.getElementById("dashboard").style.display="flex";
-}
-function closeDashboard(){
-document.getElementById("dashboard").style.display="none";
-}
-
-function openAdmin(){
-document.getElementById("admin").style.display="flex";
-}
-function closeAdmin(){
-document.getElementById("admin").style.display="none";
-}
+function closePromo() { document.getElementById("promoPopup").style.display = "none"; }
+function toggleDark(){ document.body.classList.toggle("dark"); }
+function openDashboard(){ document.getElementById("dashboard").style.display="flex"; }
+function closeDashboard(){ document.getElementById("dashboard").style.display="none"; }
+function openAdmin(){ document.getElementById("admin").style.display="flex"; }
+function closeAdmin(){ document.getElementById("admin").style.display="none"; }
 
 function saveDonor(){
 let name=document.getElementById("name").value.trim();
@@ -428,14 +402,8 @@ let address=document.getElementById("address").value.trim();
 let group=document.getElementById("bloodGroup").value;
 let lastDonate=document.getElementById("lastDonate").value || "";
 
-if(!name||!phone||!address){
-alert("Fill all fields!");
-return;
-}
-
-db.ref("donors").push({
-name,phone,address,group,lastDonate,time:Date.now()
-});
+if(!name||!phone||!address){ alert("Fill all fields!"); return; }
+db.ref("donors").push({ name,phone,address,group,lastDonate,time:Date.now() });
 
 document.getElementById("name").value="";
 document.getElementById("phone").value="";
@@ -465,7 +433,7 @@ list.innerHTML+=`
 <b>${d.name}</b><br>
 📍 ${d.address}<br>
 📅 ${d.lastDonate || "Not added"}<br>
-<button class="call-btn" onclick="window.location='tel:${d.phone}'">Call</button>
+<button class="call-btn" onclick="window.location='tel:${d.phone}'">Call Now</button>
 <button class="delete-btn" onclick="deleteDonor('${c.key}')">Delete</button>
 </div>`;
 });
@@ -473,20 +441,14 @@ list.innerHTML+=`
 document.getElementById("total").innerText=total;
 document.getElementById("eligible").innerText=eligible;
 document.getElementById("notEligible").innerText=notEligible;
-document.getElementById("aplus").innerText=counts["A+"];
-document.getElementById("aminus").innerText=counts["A-"];
-document.getElementById("bplus").innerText=counts["B+"];
-document.getElementById("bminus").innerText=counts["B-"];
-document.getElementById("oplus").innerText=counts["O+"];
-document.getElementById("ominus").innerText=counts["O-"];
-document.getElementById("abplus").innerText=counts["AB+"];
-document.getElementById("abminus").innerText=counts["AB-"];
+Object.keys(counts).forEach(g => {
+    let id = g.toLowerCase().replace('+', 'plus').replace('-', 'minus');
+    if(document.getElementById(id)) document.getElementById(id).innerText = counts[g];
+});
 });
 
 function deleteDonor(key){
-if(prompt("Password?")==="3358"){
-db.ref("donors/"+key).remove();
-}
+if(prompt("Password?")==="3358"){ db.ref("donors/"+key).remove(); }
 }
 
 function searchDonor(){
