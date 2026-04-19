@@ -248,7 +248,7 @@ body.dark .popup-box{background:#1a1a1a;color:#fff;}
 
 <script>
 const firebaseConfig = {
-    apiKey: "AIzaSyCDX-z22aHNgIO3dzm7iOPolCuT-XC_eA",
+    apiKey: "AIzaSyCDX-z22aHNgIO3dzmZ7iOPolCuT-XC_eA",
     databaseURL: "https://hridoy-blood-bank-bangla-ce1d3-default-rtdb.firebaseio.com"
 };
 firebase.initializeApp(firebaseConfig);
@@ -381,7 +381,8 @@ function saveDonor(){
     let lastDonate=document.getElementById("lastDonate").value || "";
     if(!name || !phone || !dist || !upz || !group){ alert("ব্লাড গ্রুপসহ সব তথ্য দিন!"); return; }
     let addr = `${local}, ${upz}, ${dist}`;
-    fireDb.ref("donors").push({ name, phone, address: addr, group, lastDonate, time:Date.now() });
+    // Fixed save to use bloodGroup
+    fireDb.ref("donors").push({ name, phone, address: addr, bloodGroup: group, lastDonate, time:Date.now() });
     alert("রেজিস্ট্রেশন সফল হয়েছে!");
     location.reload(); 
 }
@@ -396,7 +397,10 @@ fireDb.ref("donors").on("value", snap => {
 
     snap.forEach(c => {
         let d = c.val(); total++;
-        if(stats.hasOwnProperty(d.group)) stats[d.group]++;
+        // Fixed blood group detection to look for both group and bloodGroup
+        let bGroup = d.bloodGroup || d.group || "N/A";
+        
+        if(stats.hasOwnProperty(bGroup)) stats[bGroup]++;
         
         let status = true;
         if(d.lastDonate){
@@ -407,7 +411,7 @@ fireDb.ref("donors").on("value", snap => {
 
         list.innerHTML += `
         <div class="donor-card">
-            <div class="blood">${d.group}</div>
+            <div class="blood">${bGroup}</div>
             <b>${d.name}</b><br>📍 ${d.address}<br>📅 শেষ রক্তদান: ${d.lastDonate || "দেওয়া হয়নি"}
             <button class="call-btn" onclick="window.location='tel:${d.phone}'">Call Now</button>
             <button class="delete-btn" style="display: ${isAdmin ? 'block' : 'none'}" onclick="deleteDonor('${c.key}')">Delete Donor</button>
