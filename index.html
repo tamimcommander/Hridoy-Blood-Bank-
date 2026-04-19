@@ -11,453 +11,454 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 
 <style>
-:root{
---bg:#f5f5f5;
---card:#ffffff;
---text:#222;
---accent:#d9534f;
-}
+:root{ --bg:#f5f5f5; --card:#ffffff; --text:#222; --accent:#d9534f; }
+body.dark{ background:#000; color:#fff; }
+body{ font-family:'Inter',Arial; background:var(--bg); color:var(--text); margin:0; padding:15px; transition:0.3s; padding-bottom:60px; }
 
-body.dark{
-background:#000;
-color:#fff;
-}
+.header{ text-align:center; font-weight:800; font-size:28px; color:#fff; padding:18px 10px; border-radius:14px; margin-bottom:15px; font-family:'Poppins',sans-serif; background:linear-gradient(45deg,#d9534f,#ff3b3b,#b30000); }
 
-body{
-font-family:'Inter',Arial;
-background:var(--bg);
-color:var(--text);
-margin:0;
-padding:15px;
-transition:0.3s;
-padding-bottom:60px;
-}
-
-/* HEADER */
-.header{
-text-align:center;
-font-weight:800;
-font-size:28px;
-color:#fff;
-padding:18px 10px;
-border-radius:14px;
-margin-bottom:15px;
-font-family:'Poppins',sans-serif;
-background:linear-gradient(45deg,#d9534f,#ff3b3b,#b30000);
-}
-
-/* TOPBAR */
-.topbar{
-display:flex;
-justify-content:center;
-gap:8px;
-flex-wrap:wrap;
-margin-bottom:15px;
-}
-
-.topbar button{
-padding:8px 12px;
-border:none;
-border-radius:8px;
-font-weight:600;
-cursor:pointer;
-}
-
+.topbar{ display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-bottom:15px; }
+.topbar button{ padding:8px 12px; border:none; border-radius:8px; font-weight:600; cursor:pointer; }
 .dashboard-btn{background:#28a745;color:#fff;}
 .admin-btn{background:#007bff;color:#fff;}
 
-/* CONTAINER */
-.container{
-max-width:520px;
-margin:auto;
-background:var(--card);
-padding:20px;
-border-radius:16px;
-}
-
+.container{ max-width:520px; margin:auto; background:var(--card); padding:20px; border-radius:16px; }
 body.dark .container{background:#111;color:#fff;}
 
-/* INPUTS */
-input,select{
-width:100%;
-padding:10px;
-margin-top:8px;
-border:1px solid #ddd;
-border-radius:8px;
-box-sizing: border-box;
-}
-
-/* HIGHLIGHTED SEARCH BAR */
-.search-container {
-    margin-top: 20px;
-    position: relative;
-    width: 100%;
-}
-
-#search {
-    width: 100%;
-    padding: 14px 15px 14px 45px;
-    border: 2.5px solid var(--accent);
+.search-section {
+    background: #fff0f0;
+    padding: 15px;
     border-radius: 12px;
+    margin-bottom: 20px;
+    border: 1px dashed #d9534f;
+}
+body.dark .search-section { background: #1a0d0d; }
+
+.search-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #d9534f;
+    border-radius: 8px;
     font-size: 16px;
-    font-weight: 600;
-    background: var(--card);
-    box-shadow: 0 4px 15px rgba(217, 83, 79, 0.2);
-    transition: 0.3s;
+    margin-bottom: 10px;
+    box-sizing: border-box;
     outline: none;
 }
 
-#search:focus {
-    box-shadow: 0 4px 25px rgba(217, 83, 79, 0.4);
-    transform: translateY(-2px);
+.info-box {
+    background: linear-gradient(135deg, #fff5f5 0%, #ffe3e3 100%);
+    border: 1px solid #ffcccc;
+    padding: 15px 10px;
+    border-radius: 12px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #b30000;
+    font-size: 14px;
+    font-weight: 700;
 }
+body.dark .info-box { background: linear-gradient(135deg, #2b1111 0%, #4a1a1a 100%); border-color: #662222; color: #ff9999; }
 
-.search-icon {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 20px;
+input,select,textarea{ width:100%; padding:10px; margin-top:8px; border:1px solid #ddd; border-radius:8px; box-sizing: border-box; outline: none; font-family: inherit;}
+.form-group { margin-bottom: 10px; position: relative; }
+label { display: block; margin-top: 10px; font-weight: 600; font-size: 14px; opacity: 0.9; }
+
+.suggestions-box { 
+    position: absolute; width: 100%; background: #fff; border: 1px solid #ddd; 
+    max-height: 200px; overflow-y: auto; z-index: 999; display: none;
+    border-radius: 0 0 8px 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
+body.dark .suggestions-box { background: #222; border-color: #444; }
+.suggest-item { padding: 12px; cursor: pointer; border-bottom: 1px solid #f1f1f1; text-align: left;}
+.suggest-item:hover { background: #f8f9fa; color: #d9534f; }
 
-body.dark #search {
-    background: #222;
-    color: #fff;
-    border-color: #ff4d4d;
-}
+.locked { background: #f9f9f9; cursor: not-allowed; }
+button{ padding:10px; border:none; border-radius:8px; font-weight:600; cursor:pointer; }
+.save-btn{width:100%;background:var(--accent);color:#fff;margin-top:15px;}
+.close-btn{width:100%;background:#666;color:#fff;margin-top:15px;}
 
-label{
-display:block;
-margin-top:10px;
-font-weight:600;
-font-size:14px;
-opacity:0.9;
-}
-
-button{
-padding:10px;
-border:none;
-border-radius:8px;
-font-weight:600;
-cursor:pointer;
-}
-
-.save-btn{width:100%;background:var(--accent);color:#fff;margin-top:8px;}
-
-/* CARDS */
-.donor-card{
-border-left:6px solid var(--accent);
-padding:15px;
-margin-top:12px;
-border-radius:14px;
-box-shadow:0 6px 18px rgba(0,0,0,0.08);
-position:relative;
-}
-
-.blood{
-position:absolute;
-top:10px;
-right:10px;
-background:var(--accent);
-color:#fff;
-padding:4px 10px;
-border-radius:20px;
-font-size:12px;
-}
-
+.donor-card{ border-left:6px solid var(--accent); padding:15px; margin-top:12px; border-radius:14px; box-shadow:0 6px 18px rgba(0,0,0,0.08); position:relative; text-align: left; background: var(--card);}
+body.dark .donor-card { background: #1a1a1a; }
+.blood{ position:absolute; top:10px; right:10px; background:var(--accent); color:#fff; padding:4px 10px; border-radius:20px; font-size:12px; font-weight: bold;}
 .call-btn{width:100%;background:#28a745;color:#fff;margin-top:8px;}
-.delete-btn{width:100%;background:#dc3545;color:#fff;margin-top:6px;}
+.admin-call-btn{ background:#28a745; color:#fff; padding:4px 8px; border-radius:6px; font-size:12px; text-decoration:none; display:inline-block; margin-top:5px; }
+.delete-btn{width:100%;background:#dc3545;color:#fff;margin-top:6px; display: none;}
 
-/* POPUPS GENERAL */
-.popup{
-position:fixed;
-top:0;left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.7);
-display:none;
-justify-content:center;
-align-items:center;
-z-index: 10000;
-}
-
-.popup-box{
-background:#fff;
-padding:25px;
-border-radius:20px;
-width:92%;
-max-width:400px;
-text-align:center;
-position: relative;
-animation: popIn 0.4s ease;
-}
-
+.popup{ position:fixed; top:0;left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:none; justify-content:center; align-items:center; z-index: 10000; }
+.popup-box{ background:#fff; padding:25px; border-radius:20px; width:92%; max-width:400px; text-align:center; position: relative; max-height: 85vh; overflow-y: auto;}
 body.dark .popup-box{background:#1a1a1a;color:#fff;}
 
-@keyframes popIn {
-  from {transform: scale(0.8); opacity: 0;}
-  to {transform: scale(1); opacity: 1;}
-}
+/* Unique Dashboard Styling */
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+.stat-card { padding: 15px; border-radius: 12px; text-align: center; }
+.stat-card b { font-size: 22px; display: block; }
+.group-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 15px; }
+.group-item { background: rgba(217, 83, 79, 0.1); padding: 10px 5px; border-radius: 8px; border: 1px solid rgba(217, 83, 79, 0.2); }
+.group-item span { font-size: 12px; font-weight: 700; color: var(--accent); }
+.group-item b { display: block; font-size: 16px; }
 
-/* ADMIN PANEL STYLING */
-.admin-card {
-    background: rgba(0, 0, 0, 0.03);
-    padding: 15px;
-    border-radius: 15px;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-align: left;
-    border: 1px solid rgba(0,0,0,0.05);
-}
-
-body.dark .admin-card { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
-
-.admin-img {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.contact-mini-btn {
-    display: inline-block;
-    margin-top: 5px;
-    padding: 5px 12px;
-    background: var(--accent);
-    color: white;
-    text-decoration: none;
-    font-size: 12px;
-    border-radius: 20px;
-    font-weight: 600;
-}
-
-/* WATERMARK */
-.watermark{
-position:fixed;
-bottom:10px;
-left:0;
-width:100%;
-text-align:center;
-font-size:13px;
-opacity:0.6;
-pointer-events:none;
-}
-
-.close-x {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 25px;
-  cursor: pointer;
-  color: #888;
-}
-
-.close-btn{background:#dc3545; color:#fff; width:100%; margin-top:10px;}
+.watermark{ position:fixed; bottom:10px; left:0; width:100%; text-align:center; font-size:13px; opacity:0.6; pointer-events:none; }
 </style>
 </head>
 
 <body>
 
-<div id="promoPopup" class="popup">
-  <div class="popup-box">
-    <span class="close-x" onclick="closePromo()">&times;</span>
-    <h2 style="color:#d9534f; margin-top:0;">রক্ত দিন, জীবন বাঁচান</h2>
-    <div style="text-align:center; font-size:14px; line-height: 1.6;">
-      <p><b>🩸 ১ ব্যাগ রক্ত ৩ জন মানুষের জীবন বাঁচাতে পারে।</b></p>
-      
-      <p><b>🧠 আপনি কি জানেন?</b><br>
-      রক্তদান করলে শরীরে আয়রনের ভারসাম্য ঠিক থাকে এবং ক্যান্সার হওয়ার ঝুঁকি কমে। নিয়মিত রক্তদান করলে অস্থিমজ্জা সজীব থাকে যা নতুন রক্তকণিকা তৈরিতে সাহায্য করে।</p>
-      
-      <p><b>💪 মানসিক প্রশান্তি:</b><br>
-      এক গবেষণায় দেখা গেছে, নিঃস্বার্থভাবে কারো সাহায্য করলে মানসিক অবসাদ ও স্ট্রেস দ্রুত কমে যায়।</p>
-
-      <p style="color: #d9534f;">👉 <b>আপনার ১০ মিনিট = কারো নতুন জীবন ❤️</b></p>
-    </div>
-    <button class="save-btn" style="padding:12px; font-size:16px;" onclick="closePromo()">আমি সাহায্য করবো</button>
-  </div>
-</div>
-
 <div class="header">🩸 Hridoy Blood Bank</div>
 
 <div class="topbar">
-<button class="dashboard-btn" onclick="openDashboard()">Dashboard</button>
+<button class="dashboard-btn" onclick="openDashboard()">📊 Dashboard</button>
 <button onclick="toggleDark()">🌙 Dark</button>
-<button class="admin-btn" onclick="openAdmin()">Admin</button>
+<button class="admin-btn" onclick="openAdmin()">👨‍💼 Admin</button>
 <button style="background:#0084ff;color:#fff;" onclick="window.open('https://m.me/j/AbbwNwnn9NjKLPTS/','_blank')">💬 Group</button>
 </div>
 
 <div class="container">
-<input id="name" placeholder="Donor Name">
-<input id="phone" placeholder="Phone Number">
-<input id="address" placeholder="Donor Address">
+    <div class="search-section">
+        <label style="margin-top:0; margin-bottom:5px;">🔍 Search blood donors</label>
+        <input type="text" id="mainSearch" class="search-input" placeholder="O+ / Name / Area" onkeyup="filterDonors()">
+    </div>
 
-<select id="bloodGroup">
-<option>A+</option><option>A-</option>
-<option>B+</option><option>B-</option>
-<option>O+</option><option>O-</option>
-<option>AB+</option><option>AB-</option>
-</select>
+    <div class="info-box">
+      <h2>💐 স্বাগতম আপনাকে 💐 </h2> আমাদের Hridoy Blood Bank ওয়েবসাইটে <br> আপনার দেয়া ৫ মিনিট কারো নতুন জীবন <br>
+তাই আপনার তথ্য যুক্ত করে অন্যকে সাহায্য করুন।
+    </div>
+    
+    <h3>Donor registration</h3>
+    <input id="name" placeholder="Donor Name">
+    <input id="phone" placeholder="Phone Number">
+    
+    <div class="form-group">
+        <label>District</label>
+        <input type="text" id="distInput" autocomplete="off" placeholder="Search District...">
+        <div id="distList" class="suggestions-box"></div>
+    </div>
 
-<label>Last Donate (Optional)</label>
-<input id="lastDonate" type="date">
+    <div class="form-group">
+        <label>Upazila</label>
+        <input type="text" id="upzInput" autocomplete="off" placeholder="Select district first" class="locked" disabled>
+        <div id="upzList" class="suggestions-box"></div>
+    </div>
 
-<button class="save-btn" onclick="saveDonor()">Save Donor</button>
+    <div class="form-group">
+        <label>Local Area / Village</label>
+        <textarea id="localNote" placeholder="Write village or area name..."></textarea>
+    </div>
 
-<div class="search-container">
-    <span class="search-icon">🔍</span>
-    <input id="search" placeholder="Search by name or blood group..." onkeyup="searchDonor()">
-</div>
+    <select id="bloodGroup">
+        <option value="">Select Blood Group</option>
+        <option>A+</option><option>A-</option>
+        <option>B+</option><option>B-</option>
+        <option>O+</option><option>O-</option>
+        <option>AB+</option><option>AB-</option>
+    </select>
 
-<div id="donorList"></div>
-</div>
+    <label>Last Donate (Optional)</label>
+    <input id="lastDonate" type="date">
 
-<div id="dashboard" class="popup">
-<div class="popup-box">
-<h2>📊 Dashboard</h2>
-<div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; font-size:12px;">
-<div style="background:#eee; padding:10px; border-radius:10px; color:#000;">Total<b id="total" style="display:block; font-size:16px;">0</b></div>
-<div style="background:#d4edda; padding:10px; border-radius:10px; color:#000;">Eligible<b id="eligible" style="display:block; font-size:16px;">0</b></div>
-<div style="background:#f8d7da; padding:10px; border-radius:10px; color:#000;">Not<b id="notEligible" style="display:block; font-size:16px;">0</b></div>
-</div>
-<hr style="margin:15px 0; opacity:0.2;">
-<div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:8px;">
-<div style="opacity:0.8;">A+ <br><b id="aplus">0</b></div>
-<div style="opacity:0.8;">A- <br><b id="aminus">0</b></div>
-<div style="opacity:0.8;">B+ <br><b id="bplus">0</b></div>
-<div style="opacity:0.8;">B- <br><b id="bminus">0</b></div>
-<div style="opacity:0.8;">O+ <br><b id="oplus">0</b></div>
-<div style="opacity:0.8;">O- <br><b id="ominus">0</b></div>
-<div style="opacity:0.8;">AB+ <br><b id="abplus">0</b></div>
-<div style="opacity:0.8;">AB- <br><b id="abminus">0</b></div>
-</div>
-<button class="close-btn" onclick="closeDashboard()">Close</button>
-</div>
+    <button class="save-btn" onclick="saveDonor()">Register Donor</button>
+
+    <hr style="margin: 25px 0; opacity: 0.2;">
+    <h3 id="listTitle">সকল ডোনার তালিকা</h3>
+    <div id="donorList"></div>
 </div>
 
 <div id="admin" class="popup">
-<div class="popup-box">
-    <h2 style="color: var(--accent); margin-bottom:5px;">👨🏻‍💻 আমাদের টীম 👨🏻‍💻</h2>
-    <p style="font-size: 13px; opacity: 0.7; margin-bottom:20px;">মানবতার সেবায় আমরা সব সময় আপনার পাশে।</p>
-
-    <div class="admin-card">
-        <img src="https://i.ibb.co.com/3mGv4YyK/FB-IMG-1776482627543.jpg" class="admin-img" style="border: 2px solid #007bff;">
-        <div>
-            <b style="color:#007bff;">Tamim Commander</b><br>
-            <small>Technical Support</small><br>
-            <a href="tel:01707493733" class="contact-mini-btn" style="background:#007bff;">Call: 01707493733</a>
+    <div class="popup-box">
+        <h2 id="adminHeader">👨‍💼 Admin Panel 👨‍💼</h2>
+        
+        <div id="adminAuthArea">
+            <button class="admin-btn" onclick="secretAdminTrigger()" style="width:100%; padding:15px; font-size:16px;">Click to Verify Admin</button>
         </div>
-    </div>
 
-    <div class="admin-card">
-        <img src="https://i.ibb.co.com/LDdPdJBL/Screenshot-20260418-095221.png" class="admin-img" style="border: 2px solid #28a745;">
-        <div>
-            <b style="color:#28a745;">Hridoy Ahmed Omor</b><br>
-            <small>Management Support</small><br>
-            <a href="tel:01997545658" class="contact-mini-btn" style="background:#28a745;">Call: 01997545658</a>
+        <div id="adminControls" style="display:none; margin-bottom:20px;">
+            <p style="color:#28a745; font-weight:bold;">✅ Admin Mode Active</p>
+            <button class="close-btn" style="background:#dc3545;" onclick="logoutAdmin()">Logout Admin</button>
         </div>
-    </div>
 
-    <div class="admin-card">
-        <img src="https://i.ibb.co.com/kscvchHV/FB-IMG-1776483729557.jpg" class="admin-img" style="border: 2px solid #ff9800;">
-        <div>
-            <b style="color:#e68a00;">Sayem Khan Arafat</b><br>
-            <small>Service Support</small><br>
-            <a href="tel:01826168177" class="contact-mini-btn" style="background:#ff9800;">Call: 01826168177</a>
+        <div style="text-align:left;line-height:1.8;margin-top:15px;">
+            <div style="padding:12px;border-radius:12px;background:rgba(0,123,255,0.15);margin-bottom:10px;border-left:4px solid #007bff;">
+                <b>🛠 Technical Support</b><br>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <img src="https://i.ibb.co.com/3mGv4YyK/FB-IMG-1776482627543.jpg" style="width:35px;height:35px;border-radius:50%;object-fit:cover;">
+                    <div>
+                        Tamim Commander<br>
+                        <a href="tel:01707493733" class="admin-call-btn">📞 Call Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="padding:12px;border-radius:12px;background:rgba(40,167,69,0.15);margin-bottom:10px;border-left:4px solid #28a745;">
+                <b>🏢 Management Support</b><br>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <img src="https://i.ibb.co.com/LDdPdJBL/Screenshot-20260418-095221.png" style="width:35px;height:35px;border-radius:50%;object-fit:cover;">
+                    <div>
+                        Hridoy Ahmed Omor<br>
+                        <a href="tel:01766-727747" class="admin-call-btn">📞 Call Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="padding:12px;border-radius:12px;background:rgba(255,193,7,0.15);margin-bottom:10px;border-left:4px solid #ffc107;">
+                <b>⚙️ Service Support</b><br>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <img src="https://i.ibb.co.com/kscvchHV/FB-IMG-1776483729557.jpg" style="width:35px;height:35px;border-radius:50%;object-fit:cover;">
+                    <div>
+                        Arafat Khan Sayem<br>
+                        <a href="tel:01826168177" class="admin-call-btn">📞 Call Now</a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <button class="close-btn" onclick="closeAdmin()">বন্ধ করুন</button>
+        <button class="close-btn" onclick="closeAdmin()">Close</button>
+    </div>
 </div>
+
+<div id="dashboard" class="popup">
+    <div class="popup-box" style="max-width:450px;">
+        <h2 style="color:var(--accent); margin-top:0;">📊 Donor Statistics</h2>
+        
+        <div class="stat-grid">
+            <div class="stat-card" style="background:#e8f4fd; color:#0056b3;">
+                <span>Total Donors</span>
+                <b id="total">0</b>
+            </div>
+            <div class="stat-card" style="background:#e9f7ef; color:#1e7e34;">
+                <span>Available Now</span>
+                <b id="eligible">0</b>
+            </div>
+        </div>
+
+        <h3 style="font-size:16px; margin-bottom:10px; opacity:0.8;">Blood Group Summary</h3>
+        <div class="group-grid" id="groupStats">
+            <div class="group-item"><span>A+</span><b id="count-Ap">0</b></div>
+            <div class="group-item"><span>A-</span><b id="count-An">0</b></div>
+            <div class="group-item"><span>B+</span><b id="count-Bp">0</b></div>
+            <div class="group-item"><span>B-</span><b id="count-Bn">0</b></div>
+            <div class="group-item"><span>O+</span><b id="count-Op">0</b></div>
+            <div class="group-item"><span>O-</span><b id="count-On">0</b></div>
+            <div class="group-item"><span>AB+</span><b id="count-ABp">0</b></div>
+            <div class="group-item"><span>AB-</span><b id="count-ABn">0</b></div>
+        </div>
+
+        <button class="save-btn" onclick="closeDashboard()" style="margin-top:25px;">Back to Home</button>
+    </div>
 </div>
 
 <div class="watermark">Developed by Tamim Commander (Admin)</div>
 
 <script>
 const firebaseConfig = {
-apiKey: "AIzaSyCDX-z22aHNgIO3dzm7iOPolCuT-XC_eA",
-databaseURL: "https://hridoy-blood-bank-bangla-ce1d3-default-rtdb.firebaseio.com"
+    apiKey: "AIzaSyCDX-z22aHNgIO3dzm7iOPolCuT-XC_eA",
+    databaseURL: "https://hridoy-blood-bank-bangla-ce1d3-default-rtdb.firebaseio.com"
+};
+firebase.initializeApp(firebaseConfig);
+const fireDb = firebase.database();
+
+const locationDB = {
+    "Bagerhat": ["Bagerhat Sadar", "Chitalmari", "Fakirhat", "Kachua", "Mollahat", "Mongla", "Morrelganj", "Rampal", "Sarankhola"],
+    "Bandarban": ["Bandarban Sadar", "Alikadam", "Thanchi", "Rowangchhari", "Lama", "Ruma", "Naikhongchhari"],
+    "Barguna": ["Barguna Sadar", "Amtali", "Betagi", "Bamna", "Patharghata", "Taltali"],
+    "Barishal": ["Barishal Sadar", "Bakerganj", "Babuganj", "Banaripara", "Gournadi", "Hizla", "Mehendiganj", "Muladi", "Wazirpur"],
+    "Bhola": ["Bhola Sadar", "Burhanuddin", "Char Fasson", "Daulatkhan", "Lalmohan", "Manpura", "Tazumuddin"],
+    "Bogura": ["Bogura Sadar", "Adamdighi", "Dhunat", "Dhupchanchia", "Gabtali", "Kahaloo", "Nandigram", "Sariakandi", "Shajahanpur", "Sherpur", "Shibganj", "Sonatola"],
+    "Brahmanbaria": ["Brahmanbaria Sadar", "Ashuganj", "Bancharampur", "Kasba", "Nabinagar", "Nasirnagar", "Sarail", "Bijoynagar"],
+    "Chandpur": ["Chandpur Sadar", "Faridganj", "Haimchar", "Haziganj", "Kachua", "Matlab North", "Matlab South", "Shahrasti"],
+    "Chittagong": ["Anwara", "Banshkhali", "Boalkhali", "Chandanaish", "Fatikchhari", "Hathazari", "Lohagara", "Mirsharai", "Patiya", "Rangunia", "Raozan", "Sandwip", "Satkania", "Sitakunda"],
+    "Chuadanga": ["Chuadanga Sadar", "Alamdanga", "Damurhuda", "Jibannagar"],
+    "Cumilla": ["Cumilla Sadar", "Barura", "Brahmanpara", "Burichang", "Chandina", "Chauddagram", "Daudkandi", "Debidwar", "Homna", "Laksam", "Muradnagar", "Nangalkot", "Titas"],
+    "Cox's Bazar": ["Cox's Bazar Sadar", "Chakaria", "Kutubdia", "Maheshkhali", "Ramu", "Teknaf", "Ukhia", "Pekua"],
+    "Dhaka": ["Dhamrai", "Dohar", "Keraniganj", "Nawabganj", "Savar"],
+    "Dinajpur": ["Dinajpur Sadar", "Birampur", "Birganj", "Birol", "Bochaganj", "Chirirbandar", "Phulbari", "Ghoraghat", "Hakimpur", "Kaharole", "Khansama", "Nawabganj", "Parbatipur"],
+    "Faridpur": ["Faridpur Sadar", "Alfadanga", "Bhanga", "Boalmari", "Charbhadrasan", "Madhukhali", "Nagarkanda", "Sadarpur", "Saltha"],
+    "Feni": ["Feni Sadar", "Chhagalnaiya", "Daganbhuiyan", "Parshuram", "Sonagazi", "Fulgazi"],
+    "Gaibandha": ["Gaibandha Sadar", "Phulchhari", "Gobindaganj", "Palashbari", "Sadullapur", "Saghata", "Sundarganj"],
+    "Gazipur": ["Gazipur Sadar", "Kaliakair", "Kaliganj", "Kapasia", "Sreepur"],
+    "Gopalganj": ["Gopalganj Sadar", "Kashiani", "Kotalipara", "Muksudpur", "Tungipara"],
+    "Habiganj": ["Habiganj Sadar", "Ajmiriganj", "Bahubal", "Baniyachong", "Chunarughat", "Madhabpur", "Nabiganj", "Lakhai"],
+    "Jamalpur": ["Jamalpur Sadar", "Bakshiganj", "Dewanganj", "Islampur", "Madarganj", "Melandaha", "Sarishabari"],
+    "Jashore": ["Jashore Sadar", "Abhaynagar", "Bagherpara", "Chaugachha", "Jhikargachha", "Keshabpur", "Manirampur", "Sharsha"],
+    "Jhalokati": ["Jhalokati Sadar", "Kathalia", "Nalchity", "Rajapur"],
+    "Jhenaidah": ["Jhenaidah Sadar", "Harinakunda", "Kaliganj", "Kotchandpur", "Maheshpur", "Shailkupa"],
+    "Joypurhat": ["Joypurhat Sadar", "Akkelpur", "Kalai", "Khetlal", "Panchbibi"],
+    "Khagrachhari": ["Khagrachhari Sadar", "Dighinala", "Lakshmichhari", "Mahalchhari", "Manikchhari", "Matiranga", "Panchhari", "Ramgarh"],
+    "Khulna": ["Batiaghata", "Dacope", "Dumuria", "Dighalia", "Koyra", "Paikgachha", "Phultala", "Rupsha", "Terokhada"],
+    "Kishoreganj": ["Kishoreganj Sadar", "Austagram", "Bajitpur", "Bhairab", "Hossainpur", "Itna", "Karimganj", "Katiadi", "Kuliarchar", "Mithamain", "Nikli", "Pakundia", "Tarail"],
+    "Kurigram": ["Kurigram Sadar", "Bhurungamari", "Char Rajibpur", "Chilmari", "Phulbari", "Nageshwari", "Rajarhat", "Roumari", "Ulipur"],
+    "Kushtia": ["Kushtia Sadar", "Bheramara", "Daulatpur", "Khoksa", "Kumarkhali", "Mirpur"],
+    "Lakshmipur": ["Lakshmipur Sadar", "Raipur", "Ramganj", "Ramgati", "Kamalnagar"],
+    "Lalmonirhat": ["Lalmonirhat Sadar", "Aditmari", "Hatibandha", "Kaliganj", "Patgram"],
+    "Madaripur": ["Madaripur Sadar", "Kalkini", "Rajoir", "Shibchar"],
+    "Magura": ["Magura Sadar", "Mohammadpur", "Shalikha", "Sreepur"],
+    "Manikganj": ["Manikganj Sadar", "Singair", "Shibalaya", "Saturia", "Harirampur", "Ghiror", "Daulatpur"],
+    "Meherpur": ["Meherpur Sadar", "Gangni", "Mujibnagar"],
+    "Moulvibazar": ["Moulvibazar Sadar", "Barlekha", "Juri", "Kamalganj", "Kulaura", "Rajnagar", "Sreemangal"],
+    "Munshiganj": ["Munshiganj Sadar", "Gazaria", "Lohajang", "Sirajdikhan", "Sreenagar", "Tongibari"],
+    "Mymensingh": ["Mymensingh Sadar", "Bhaluka", "Dhobaura", "Fulbaria", "Gaffargaon", "Gauripur", "Haluaghat", "Ishwarganj", "Muktagachha", "Nandail", "Phulpur", "Trishal", "Tara Khanda"],
+    "Naogaon": ["Naogaon Sadar", "Atrai", "Badalgachhi", "Dhamoirhat", "Manda", "Mahadevpur", "Niamatpur", "Patnitala", "Porsha", "Raninagar", "Sapahar"],
+    "Narail": ["Narail Sadar", "Kalia", "Lohagara"],
+    "Narayanganj": ["Narayanganj Sadar", "Araihazar", "Bandar", "Rupganj", "Sonargaon"],
+    "Narsingdi": ["Narsingdi Sadar", "Belabo", "Monohardi", "Palash", "Raipura", "Shibpur"],
+    "Natore": ["Natore Sadar", "Bagatipara", "Baraigram", "Gurudaspur", "Lalpur", "Singra", "Naldanga"],
+    "Netrokona": ["Netrokona Sadar", "Atpara", "Barhatta", "Durgapur", "Khaliajuri", "Kalmakanda", "Kendua", "Madan", "Mohanganj", "Purbadhala"],
+    "Nilphamari": ["Nilphamari Sadar", "Dimla", "Domar", "Jaldhaka", "Kishoreganj", "Saidpur"],
+    "Noakhali": ["Noakhali Sadar", "Begumganj", "Chatkhil", "Companiganj", "Hatiya", "Senbagh", "Sonaimuri", "Subarnachar", "Kabirhat"],
+    "Pabna": ["Pabna Sadar", "Atgharia", "Bera", "Bhangura", "Chatmohar", "Faridpur", "Ishwardi", "Santhia", "Sujanagar"],
+    "Panchagarh": ["Panchagarh Sadar", "Atwari", "Boda", "Debiganj", "Tetulia"],
+    "Patuakhali": ["Patuakhali Sadar", "Bauphal", "Dashmina", "Galachipa", "Kalapara", "Mirzaganj", "Rangabali", "Dumki"],
+    "Pirojpur": ["Pirojpur Sadar", "Bhandaria", "Kawkhali", "Mathbaria", "Nazirpur", "Nesarabad", "Indurkani"],
+    "Rajbari": ["Rajbari Sadar", "Baliakandi", "Goalanda", "Pangsha", "Kalukhali"],
+    "Rajshahi": ["Bagha", "Bagmara", "Charghat", "Durgapur", "Godagari", "Mohanpur", "Paba", "Puthia", "Tanore"],
+    "Rangamati": ["Rangamati Sadar", "Baghaichhari", "Barkal", "Kawkhali", "Belaichhari", "Kaptai", "Jurachhari", "Langadu", "Naniyarchar", "Rajasthali"],
+    "Rangpur": ["Rangpur Sadar", "Badarganj", "Gangachara", "Kaunia", "Mithapukur", "Pirgachha", "Pirganj", "Taraganj"],
+    "Satkhira": ["Satkhira Sadar", "Assasuni", "Debhata", "Kalaroa", "Kaliganj", "Shyamnagar", "Tala"],
+    "Shariatpur": ["Shariatpur Sadar", "Bhedarganj", "Damudya", "Gosairhat", "Naria", "Zajira"],
+    "Sherpur": ["Sherpur Sadar", "Jhenaigati", "Nakla", "Nalitabari", "Sreebardi"],
+    "Sirajganj": ["Sirajganj Sadar", "Belkuchi", "Chauhali", "Kamarkhanda", "Kazipur", "Raiganj", "Shahjadpur", "Tarash", "Ullahpara"],
+    "Sunamganj": ["Sunamganj Sadar", "Bishwamvapur", "Chhatak", "Derai", "Dharamapasha", "Dowarabazar", "Jagannathpur", "Jamalganj", "Sullah", "Tahirpur", "South Sunamganj"],
+    "Sylhet": ["Sylhet Sadar", "Beanibazar", "Bishwanath", "Fenchuganj", "Golapganj", "Gowainghat", "Jaintiapur", "Kanaighat", "Zakiganj"],
+    "Tangail": ["Tangail Sadar", "Basail", "Bhuapur", "Delduar", "Ghatail", "Gopalpur", "Kalihati", "Madhupur", "Mirzapur", "Nagarpur", "Sakhipur", "Dhanbari"],
+    "Thakurgaon": ["Thakurgaon Sadar", "Baliadangi", "Haripur", "Pirganj", "Ranisankail"]
 };
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+let isAdmin = false;
 
-// AUTO SHOW POPUP
-window.addEventListener('load', function() {
-  setTimeout(() => { document.getElementById("promoPopup").style.display = "flex"; }, 1500);
+function filterDonors() {
+    let query = document.getElementById("mainSearch").value.toLowerCase().trim();
+    let cards = document.querySelectorAll(".donor-card");
+    let visibleCount = 0;
+    cards.forEach(card => {
+        let txt = card.innerText.toLowerCase();
+        if (txt.includes(query)) {
+            card.style.display = "block"; visibleCount++;
+        } else { card.style.display = "none"; }
+    });
+    document.getElementById("listTitle").innerText = query === "" ? "সকল ডোনার তালিকা" : `সার্চ রেজাল্ট (${visibleCount})`;
+}
+
+const dInp = document.getElementById('distInput');
+const uInp = document.getElementById('upzInput');
+const dBox = document.getElementById('distList');
+const uBox = document.getElementById('upzList');
+let selectedDistrict = "";
+
+dInp.addEventListener('input', function() {
+    const val = this.value.trim().toLowerCase();
+    dBox.innerHTML = "";
+    if (!val) { dBox.style.display = "none"; return; }
+    const matches = Object.keys(locationDB).filter(d => d.toLowerCase().includes(val));
+    if (matches.length > 0) {
+        dBox.style.display = "block";
+        matches.forEach(name => {
+            const div = document.createElement('div'); div.className = 'suggest-item'; div.innerText = name;
+            div.onclick = () => { dInp.value = name; selectedDistrict = name; dBox.style.display = "none"; uInp.disabled = false; uInp.classList.remove('locked'); uInp.value = ""; };
+            dBox.appendChild(div);
+        });
+    }
 });
 
-function closePromo() { document.getElementById("promoPopup").style.display = "none"; }
-function toggleDark(){ document.body.classList.toggle("dark"); }
-function openDashboard(){ document.getElementById("dashboard").style.display="flex"; }
-function closeDashboard(){ document.getElementById("dashboard").style.display="none"; }
-function openAdmin(){ document.getElementById("admin").style.display="flex"; }
-function closeAdmin(){ document.getElementById("admin").style.display="none"; }
+uInp.addEventListener('input', function() {
+    const val = this.value.toLowerCase();
+    uBox.innerHTML = "";
+    if (!selectedDistrict) return;
+    const matches = locationDB[selectedDistrict].filter(u => u.toLowerCase().includes(val));
+    if (matches.length > 0) {
+        uBox.style.display = "block";
+        matches.forEach(u => {
+            const div = document.createElement('div'); div.className = 'suggest-item'; div.innerText = u;
+            div.onclick = () => { uInp.value = u; uBox.style.display = "none"; };
+            uBox.appendChild(div);
+        });
+    }
+});
 
 function saveDonor(){
-let name=document.getElementById("name").value.trim();
-let phone=document.getElementById("phone").value.trim();
-let address=document.getElementById("address").value.trim();
-let group=document.getElementById("bloodGroup").value;
-let lastDonate=document.getElementById("lastDonate").value || "";
-
-if(!name||!phone||!address){ alert("Fill all fields!"); return; }
-db.ref("donors").push({ name,phone,address,group,lastDonate,time:Date.now() });
-
-document.getElementById("name").value="";
-document.getElementById("phone").value="";
-document.getElementById("address").value="";
-document.getElementById("lastDonate").value="";
+    let name=document.getElementById("name").value.trim();
+    let phone=document.getElementById("phone").value.trim();
+    let dist=dInp.value.trim();
+    let upz=uInp.value.trim();
+    let local=document.getElementById("localNote").value.trim();
+    let group=document.getElementById("bloodGroup").value;
+    let lastDonate=document.getElementById("lastDonate").value || "";
+    if(!name || !phone || !dist || !upz || !group){ alert("ব্লাড গ্রুপসহ সব তথ্য দিন!"); return; }
+    let addr = `${local}, ${upz}, ${dist}`;
+    fireDb.ref("donors").push({ name, phone, address: addr, group, lastDonate, time:Date.now() });
+    alert("রেজিস্ট্রেশন সফল হয়েছে!");
+    location.reload(); 
 }
 
-db.ref("donors").on("value",snap=>{
-let list=document.getElementById("donorList");
-list.innerHTML="";
-let total=0,eligible=0,notEligible=0;
-let counts = {"A+":0,"A-":0,"B+":0,"B-":0,"O+":0,"O-":0,"AB+":0,"AB-":0};
+fireDb.ref("donors").on("value", snap => {
+    let list = document.getElementById("donorList");
+    list.innerHTML = "";
+    let total = 0, eligible = 0;
+    
+    // Stats Counter
+    let stats = {"A+":0,"A-":0,"B+":0,"B-":0,"O+":0,"O-":0,"AB+":0,"AB-":0};
 
-snap.forEach(c=>{
-let d=c.val();
-total++;
-if(counts.hasOwnProperty(d.group)) counts[d.group]++;
+    snap.forEach(c => {
+        let d = c.val(); total++;
+        if(stats.hasOwnProperty(d.group)) stats[d.group]++;
+        
+        let status = true;
+        if(d.lastDonate){
+            let diff = Math.floor((Date.now()-new Date(d.lastDonate))/(1000*60*60*24));
+            if(diff < 90) status = false;
+        }
+        if(status) eligible++;
 
-if(d.lastDonate){
-let diff=Math.floor((Date.now()-new Date(d.lastDonate))/(1000*60*60*24));
-if(diff>=90) eligible++; else notEligible++;
-}else{ eligible++; }
+        list.innerHTML += `
+        <div class="donor-card">
+            <div class="blood">${d.group}</div>
+            <b>${d.name}</b><br>📍 ${d.address}<br>📅 শেষ রক্তদান: ${d.lastDonate || "দেওয়া হয়নি"}
+            <button class="call-btn" onclick="window.location='tel:${d.phone}'">Call Now</button>
+            <button class="delete-btn" style="display: ${isAdmin ? 'block' : 'none'}" onclick="deleteDonor('${c.key}')">Delete Donor</button>
+        </div>`;
+    });
 
-list.innerHTML+=`
-<div class="donor-card">
-<div class="blood">${d.group}</div>
-<b>${d.name}</b><br>
-📍 ${d.address}<br>
-📅 ${d.lastDonate || "Not added"}<br>
-<button class="call-btn" onclick="window.location='tel:${d.phone}'">Call Now</button>
-<button class="delete-btn" onclick="deleteDonor('${c.key}')">Delete</button>
-</div>`;
+    // Update Dashboard Display
+    document.getElementById("total").innerText = total;
+    document.getElementById("eligible").innerText = eligible;
+    document.getElementById("count-Ap").innerText = stats["A+"];
+    document.getElementById("count-An").innerText = stats["A-"];
+    document.getElementById("count-Bp").innerText = stats["B+"];
+    document.getElementById("count-Bn").innerText = stats["B-"];
+    document.getElementById("count-Op").innerText = stats["O+"];
+    document.getElementById("count-On").innerText = stats["O-"];
+    document.getElementById("count-ABp").innerText = stats["AB+"];
+    document.getElementById("count-ABn").innerText = stats["AB-"];
 });
 
-document.getElementById("total").innerText=total;
-document.getElementById("eligible").innerText=eligible;
-document.getElementById("notEligible").innerText=notEligible;
-Object.keys(counts).forEach(g => {
-    let id = g.toLowerCase().replace('+', 'plus').replace('-', 'minus');
-    if(document.getElementById(id)) document.getElementById(id).innerText = counts[g];
-});
-});
+function toggleDark(){ document.body.classList.toggle("dark"); }
+function openAdmin(){ document.getElementById("admin").style.display="flex"; }
+function closeAdmin(){ document.getElementById("admin").style.display="none"; }
+function openDashboard(){ document.getElementById("dashboard").style.display="flex"; }
+function closeDashboard(){ document.getElementById("dashboard").style.display="none"; }
+
+function secretAdminTrigger(){
+    let pass = prompt("Enter Admin Password:");
+    if(pass === "3358"){
+        isAdmin = true;
+        alert("✅ Admin Mode Active!");
+        document.getElementById("adminAuthArea").style.display = "none";
+        document.getElementById("adminControls").style.display = "block";
+        document.querySelectorAll('.delete-btn').forEach(b => b.style.display = 'block');
+    } else {
+        alert("❌ Wrong Password!");
+    }
+}
+
+function logoutAdmin(){
+    isAdmin = false;
+    alert("Admin Mode Logged Out.");
+    document.getElementById("adminAuthArea").style.display = "block";
+    document.getElementById("adminControls").style.display = "none";
+    document.querySelectorAll('.delete-btn').forEach(b => b.style.display = 'none');
+}
 
 function deleteDonor(key){
-if(prompt("Password?")==="3358"){ db.ref("donors/"+key).remove(); }
-}
-
-function searchDonor(){
-let v=document.getElementById("search").value.toLowerCase();
-document.querySelectorAll(".donor-card").forEach(c=>{
-c.style.display=c.innerText.toLowerCase().includes(v)?"":"none";
-});
+    if(confirm("ডোনার ডিলিট করতে চান?")){
+        fireDb.ref("donors/"+key).remove();
+    }
 }
 </script>
-
 </body>
 </html>
