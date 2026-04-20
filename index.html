@@ -11,458 +11,468 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 
 <style>
-:root{ --bg:#f5f5f5; --card:#ffffff; --text:#222; --accent:#d9534f; }
-body.dark{ background:#000; color:#fff; }
+:root{ --bg:#f5f5f5; --card:#ffffff; --text:#222; --accent:#d9534f; --box-bg: rgba(217, 83, 79, 0.2); }
+body.dark{ background:#000; color:#fff; --box-bg: rgba(217, 83, 79, 0.25); }
 body{ font-family:'Inter',Arial; background:var(--bg); color:var(--text); margin:0; padding:15px; transition:0.3s; padding-bottom:60px; }
 
 .header{ text-align:center; font-weight:800; font-size:28px; color:#fff; padding:18px 10px; border-radius:14px; margin-bottom:15px; font-family:'Poppins',sans-serif; background:linear-gradient(45deg,#d9534f,#ff3b3b,#b30000); }
 
-.topbar{ display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-bottom:15px; }
-.topbar button{ padding:8px 12px; border:none; border-radius:8px; font-weight:600; cursor:pointer; }
+/* Two-line button bar */
+.topbar {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+.button-row {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+}
+.topbar button {
+    flex: 1;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    text-align: center;
+}
 .dashboard-btn{background:#28a745;color:#fff;}
+.dark-btn{background:#374151;color:#fff;}
 .admin-btn{background:#007bff;color:#fff;}
+.notice-btn{background:#ffc107;color:#000;}
+.comment-btn{background:#17a2b8;color:#fff;}
+.group-btn{background:#0084ff;color:#fff;}
 
-.container{ max-width:520px; margin:auto; background:var(--card); padding:20px; border-radius:16px; }
+.container{ max-width:520px; margin:auto; background:var(--card); padding:20px; border-radius:16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
 body.dark .container{background:#111;color:#fff;}
 
+input, select, textarea { 
+    width:100%; 
+    padding:12px; 
+    margin-top:8px; 
+    border:1px solid rgba(217, 83, 79, 0.5); 
+    border-radius:8px; 
+    box-sizing: border-box; 
+    outline: none; 
+    background: var(--box-bg); 
+    box-shadow: 0 0 8px rgba(217, 83, 79, 0.2);
+    color: inherit;
+}
+
 .search-section {
-    background: #fff0f0;
+    background: rgba(217, 83, 79, 0.05);
     padding: 15px;
     border-radius: 12px;
-    margin-bottom: 20px;
-    border: 1px dashed #d9534f;
-}
-body.dark .search-section { background: #1a0d0d; }
-
-.search-input {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #d9534f;
-    border-radius: 8px;
-    font-size: 16px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-    outline: none;
+    margin-bottom: 25px;
+    border: 1px dashed var(--accent);
 }
 
-.info-box {
-    background: linear-gradient(135deg, #fff5f5 0%, #ffe3e3 100%);
-    border: 1px solid #ffcccc;
-    padding: 15px 10px;
-    border-radius: 12px;
-    text-align: center;
-    margin-bottom: 20px;
-    color: #b30000;
-    font-size: 14px;
-    font-weight: 700;
-}
-body.dark .info-box { background: linear-gradient(135deg, #2b1111 0%, #4a1a1a 100%); border-color: #662222; color: #ff9999; }
-
-input,select,textarea{ width:100%; padding:10px; margin-top:8px; border:1px solid #ddd; border-radius:8px; box-sizing: border-box; outline: none; font-family: inherit;}
-.form-group { margin-bottom: 10px; position: relative; }
-label { display: block; margin-top: 10px; font-weight: 600; font-size: 14px; opacity: 0.9; }
-
-.suggestions-box { 
-    position: absolute; width: 100%; background: #fff; border: 1px solid #ddd; 
-    max-height: 200px; overflow-y: auto; z-index: 999; display: none;
-    border-radius: 0 0 8px 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-body.dark .suggestions-box { background: #222; border-color: #444; }
-.suggest-item { padding: 12px; cursor: pointer; border-bottom: 1px solid #f1f1f1; text-align: left;}
-.suggest-item:hover { background: #f8f9fa; color: #d9534f; }
-
-.locked { background: #f9f9f9; cursor: not-allowed; }
-button{ padding:10px; border:none; border-radius:8px; font-weight:600; cursor:pointer; }
-.save-btn{width:100%;background:var(--accent);color:#fff;margin-top:15px;}
-.close-btn{width:100%;background:#666;color:#fff;margin-top:15px;}
+.find-btn { width: 100%; background: #fff; color: var(--accent); border: 2px solid var(--accent); padding: 10px; border-radius: 30px; font-weight: 700; margin-top: 10px; cursor: pointer; }
+.save-btn{width:100%;background:var(--accent);color:#fff;margin-top:15px; padding: 12px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer;}
 
 .donor-card{ border-left:6px solid var(--accent); padding:15px; margin-top:12px; border-radius:14px; box-shadow:0 6px 18px rgba(0,0,0,0.08); position:relative; text-align: left; background: var(--card);}
-body.dark .donor-card { background: #1a1a1a; }
-.blood{ position:absolute; top:10px; right:10px; background:var(--accent); color:#fff; padding:4px 10px; border-radius:20px; font-size:12px; font-weight: bold;}
-.call-btn{width:100%;background:#28a745;color:#fff;margin-top:8px;}
-.admin-call-btn{ background:#28a745; color:#fff; padding:4px 8px; border-radius:6px; font-size:12px; text-decoration:none; display:inline-block; margin-top:5px; }
-.delete-btn{width:100%;background:#dc3545;color:#fff;margin-top:6px; display: none;}
+body.dark .donor-card {background: #1a1a1a;}
+.blood-badge{ 
+    position:absolute; top:12px; right:12px; 
+    background:var(--accent); color:#fff; 
+    padding:4px 8px;
+    border-radius:50px; 
+    font-size:13px;
+    font-weight: 800; 
+    box-shadow: 0 2px 8px rgba(217, 83, 79, 0.4);
+}
+.call-btn{width:100%;background:#28a745;color:#fff;margin-top:10px; padding: 10px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;}
 
 .popup{ position:fixed; top:0;left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:none; justify-content:center; align-items:center; z-index: 10000; }
-.popup-box{ background:#fff; padding:25px; border-radius:20px; width:92%; max-width:400px; text-align:center; position: relative; max-height: 85vh; overflow-y: auto;}
-body.dark .popup-box{background:#1a1a1a;color:#fff;}
+.popup-box{ background:#fff; padding:25px; border-radius:20px; width:92%; max-width:420px; text-align:center; max-height: 85vh; overflow-y: auto; position: relative;}
+body.dark .popup-box {background: #1a1a1a; color: #fff;}
 
-/* Unique Dashboard Styling */
-.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
-.stat-card { padding: 15px; border-radius: 12px; text-align: center; }
-.stat-card b { font-size: 22px; display: block; }
-.group-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 15px; }
-.group-item { background: rgba(217, 83, 79, 0.1); padding: 10px 5px; border-radius: 8px; border: 1px solid rgba(217, 83, 79, 0.2); }
-.group-item span { font-size: 12px; font-weight: 700; color: var(--accent); }
-.group-item b { display: block; font-size: 16px; }
+.admin-card { 
+    padding: 12px; 
+    border-radius: 12px; 
+    margin-bottom: 12px; 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+    text-align: left; 
+    border-left: 4px solid #007bff; 
+    background: rgba(0,123,255,0.1); 
+}
+.admin-img { width: 55px; height: 55px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; }
+.admin-call-btn {
+    display: inline-block;
+    background: #28a745;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 6px;
+    transition: 0.2s;
+}
+.admin-call-btn:hover { background: #1e7e34; }
+
+.dashboard-stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+.dash-stat-card {
+    background: linear-gradient(135deg, #d9534f, #ff6b6b);
+    color: white;
+    width: 90px;
+    padding: 10px 5px;
+    border-radius: 20px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+.dash-stat-card span {
+    font-size: 22px;
+    font-weight: 800;
+    display: block;
+}
+.dash-total {
+    background: linear-gradient(135deg, #28a745, #34ce57);
+    width: auto;
+    padding: 10px 18px;
+}
+.dash-stat-card small {
+    font-size: 11px;
+    opacity: 0.9;
+}
+
+.comment-item {
+    background: rgba(23,162,184,0.1);
+    border-left: 3px solid #17a2b8;
+    padding: 10px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    text-align: left;
+}
+.comment-name {
+    font-weight: bold;
+    color: #17a2b8;
+}
+.comment-time {
+    font-size: 10px;
+    color: gray;
+    float: right;
+}
+.comment-text {
+    margin-top: 5px;
+    font-size: 13px;
+}
+.delete-comment-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 11px;
+    cursor: pointer;
+    margin-top: 5px;
+}
 
 .watermark{ position:fixed; bottom:10px; left:0; width:100%; text-align:center; font-size:13px; opacity:0.6; pointer-events:none; }
+
+.notice-content { text-align: left; font-size: 14px; line-height: 1.5; }
+.notice-content h4 { color: var(--accent); margin: 12px 0 5px; }
+.notice-content p { margin: 5px 0; }
+.notice-content ul { margin: 5px 0 10px 20px; padding-left: 0; }
 </style>
 </head>
-
 <body>
 
 <div class="header">🩸 Hridoy Blood Bank</div>
 
+<!-- Two-line button bar -->
 <div class="topbar">
-<button class="dashboard-btn" onclick="openDashboard()">📊 Dashboard</button>
-<button onclick="toggleDark()">🌙 Dark</button>
-<button class="admin-btn" onclick="openAdmin()">👨‍💼 Admin</button>
-<button style="background:#0084ff;color:#fff;" onclick="window.open('https://m.me/j/AbbwNwnn9NjKLPTS/','_blank')">💬 Group</button>
+    <div class="button-row">
+        <button class="dashboard-btn" onclick="openDashboard()">📊 Dashboard</button>
+        <button class="dark-btn" onclick="toggleDark()">🌙 Dark</button>
+        <button class="admin-btn" onclick="openAdmin()">👨‍💼 Admin</button>
+    </div>
+    <div class="button-row">
+        <button class="notice-btn" onclick="openNotice()">📢 Notice</button>
+        <button class="comment-btn" onclick="openComments()">💬 Comments</button>
+        <button class="group-btn" onclick="window.open('https://m.me/j/AbbwNwnn9NjKLPTS/','_blank')">💬 Group</button>
+    </div>
 </div>
 
 <div class="container">
     <div class="search-section">
-        <label style="margin-top:0; margin-bottom:5px;">🔍 Search blood donors</label>
-        <input type="text" id="mainSearch" class="search-input" placeholder="O+ / Name / Area" onkeyup="filterDonors()">
+        <h4 style="margin:0 0 10px 0; color:var(--accent); text-align:center;">🔍 Find Blood Donor</h4>
+        <select id="searchBlood">
+            <option value="">All Blood Groups</option>
+            <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+            <option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
+        </select>
+        <select id="searchDist" onchange="loadSearchUpazila()"><option value="">Select District</option></select>
+        <select id="searchUpz"><option value="">All Upazila</option></select>
+        <button class="find-btn" onclick="filterDonors()">Search Now</button>
     </div>
 
-    <div class="info-box">
-      <h2>💐 স্বাগতম আপনাকে 💐 </h2> আমাদের Hridoy Blood Bank ওয়েবসাইটে <br> আপনার দেয়া ৫ মিনিট কারো নতুন জীবন <br>
-তাই আপনার তথ্য যুক্ত করে অন্যকে সাহায্য করুন।
-    </div>
-    
-    <h3>Donor registration</h3>
+    <h3>Donor Registration</h3>
     <input id="name" placeholder="Donor Name">
     <input id="phone" placeholder="Phone Number">
-    
-    <div class="form-group">
-        <label>District</label>
-        <input type="text" id="distInput" autocomplete="off" placeholder="Search District...">
-        <div id="distList" class="suggestions-box"></div>
-    </div>
-
-    <div class="form-group">
-        <label>Upazila</label>
-        <input type="text" id="upzInput" autocomplete="off" placeholder="Select district first" class="locked" disabled>
-        <div id="upzList" class="suggestions-box"></div>
-    </div>
-
-    <div class="form-group">
-        <label>Local Area / Village</label>
-        <textarea id="localNote" placeholder="Write village or area name..."></textarea>
-    </div>
-
+    <select id="regDist" onchange="loadRegUpazila()"><option value="">Select District</option></select>
+    <select id="regUpz"><option value="">Select Upazila</option></select>
     <select id="bloodGroup">
         <option value="">Select Blood Group</option>
-        <option>A+</option><option>A-</option>
-        <option>B+</option><option>B-</option>
-        <option>O+</option><option>O-</option>
-        <option>AB+</option><option>AB-</option>
+        <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+        <option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
     </select>
-
-    <label>Last Donate (Optional)</label>
+    <label style="display:block; margin-top:10px; font-size:13px; font-weight:700; color:var(--accent);">Last Donation Date (Optional)</label>
     <input id="lastDonate" type="date">
-
-    <button class="save-btn" onclick="saveDonor()">Register Donor</button>
-
-    <hr style="margin: 25px 0; opacity: 0.2;">
-    <h3 id="listTitle">সকল ডোনার তালিকা</h3>
+    <button class="save-btn" onclick="saveDonor()">Save Donor Info</button>
+    <hr style="margin: 25px 0; opacity: 0.1;">
+    <h3 id="listTitle">Available Donors</h3>
     <div id="donorList"></div>
 </div>
 
+<!-- Notice Popup (Bangla content remains as per your request) -->
+<div id="noticePopup" class="popup">
+    <div class="popup-box">
+        <h2 style="color:#ffc107;">📢 রক্তদান সংক্রান্ত তথ্য</h2>
+        <div class="notice-content">
+            <h4>রক্তদানের উপকারিতা</h4>
+            <p>নিয়মিত রক্তদান শরীরে নতুন রক্তকণিকা তৈরিতে সহায়তা করে এবং সামগ্রিক স্বাস্থ্যের উন্নতিতে ভূমিকা রাখে। এটি হৃদ্‌রোগের ঝুঁকি কমাতে সহায়ক হতে পারে। সবচেয়ে গুরুত্বপূর্ণ বিষয় হলো, রক্তদান মানুষের জীবন বাঁচাতে সরাসরি অবদান রাখে।</p>
+            <h4>♥ কারা রক্ত দিতে পারবেন</h4>
+            <ul><li>বয়স ১৮ থেকে ৬০ বছরের মধ্যে</li><li>ন্যূনতম ওজন ৫০ কেজি</li><li>শারীরিকভাবে সুস্থ ও সক্ষম</li><li>শেষ রক্তদানের পর কমপক্ষে ৩ মাস অতিবাহিত হয়েছে</li></ul>
+            <h4>⚠ কারা রক্ত দেওয়া থেকে বিরত থাকবেন</h4>
+            <ul><li>জ্বর, সর্দি বা কোনো সংক্রমণে আক্রান্ত ব্যক্তি</li><li>যাদের হিমোগ্লোবিনের মাত্রা কম</li><li>গর্ভবতী নারী</li><li>সম্প্রতি বড় ধরনের অপারেশন হয়েছে এমন ব্যক্তি</li><li>গুরুতর অসুস্থতায় ভুগছেন এবং চিকিৎসকের অনুমতি নেই</li></ul>
+            <h4>✅ রক্তদানের পূর্বে করণীয়</h4>
+            <ul><li>পর্যাপ্ত খাবার গ্রহণ করে আসা</li><li>যথেষ্ট পানি পান করা</li><li>পর্যাপ্ত ঘুম নিশ্চিত করা</li><li>অ্যালকোহল বা ক্ষতিকর পদার্থ থেকে বিরত থাকা</li></ul>
+            <h4>🔄 রক্তদানের পর করণীয়</h4>
+            <ul><li>কমপক্ষে ১০–১৫ মিনিট বিশ্রাম নেওয়া</li><li>বেশি পরিমাণে পানি পান করা</li><li>২৪ ঘণ্টা ভারী কাজ পরিহার করা</li><li>কোনো অস্বস্তি হলে কর্তৃপক্ষকে জানানো</li></ul>
+            <h4>📌 গুরুত্বপূর্ণ নির্দেশনা</h4>
+            <p>সঠিক নিয়ম মেনে এবং প্রশিক্ষিত চিকিৎসা ব্যবস্থার মাধ্যমে রক্তদান একটি নিরাপদ প্রক্রিয়া। এটি শরীরকে দুর্বল করে না। সর্বদা বিশ্বস্ত প্রতিষ্ঠানের মাধ্যমে রক্তদান করা উচিত।</p>
+        </div>
+        <button class="save-btn" style="background:#666; margin-top:15px;" onclick="closeNotice()">বন্ধ করুন</button>
+    </div>
+</div>
+
+<!-- Admin Popup -->
 <div id="admin" class="popup">
     <div class="popup-box">
-        <h2 id="adminHeader">👨‍💼 Admin Panel 👨‍💼</h2>
-        
+        <h2 style="color:#007bff;">👨‍💼 Admin Panel</h2>
         <div id="adminAuthArea">
-            <button class="admin-btn" onclick="secretAdminTrigger()" style="width:100%; padding:15px; font-size:16px;">Click to Verify Admin</button>
+            <button class="admin-btn" onclick="secretAdminTrigger()" style="width:100%; padding:12px; margin-bottom:10px;">Verify Identity</button>
+            <button onclick="window.open('https://tamimcommander.github.io/Hridoy-Blood-Bank-Admin-panel/','_blank')" style="width:100%; padding:12px; background:#000; color:#fff; border-radius:8px; border:none;">Login Admin Panel</button>
         </div>
-
-        <div id="adminControls" style="display:none; margin-bottom:20px;">
-            <p style="color:#28a745; font-weight:bold;">✅ Admin Mode Active</p>
-            <button class="close-btn" style="background:#dc3545;" onclick="logoutAdmin()">Logout Admin</button>
+        <div id="adminControls" style="display:none;">
+            <p style="color:#28a745;">✅ Admin Mode Active</p>
+            <button class="save-btn" style="background:#dc3545;" onclick="logoutAdmin()">Logout</button>
         </div>
-
-        <div style="text-align:left;line-height:1.8;margin-top:15px;">
-            <div style="padding:12px;border-radius:12px;background:rgba(0,123,255,0.15);margin-bottom:10px;border-left:4px solid #007bff;">
-                <b>🛠 Technical Support</b><br>
-                <div style="display:flex;align-items:center;gap:8px;">
-                    <img src="https://i.ibb.co.com/3mGv4YyK/FB-IMG-1776482627543.jpg" style="width:35px;height:35px;border-radius:50%;object-fit:cover;">
-                    <div>
-                        Tamim Commander<br>
-                        <a href="tel:01707493733" class="admin-call-btn">📞 Call Now</a>
-                    </div>
-                </div>
+        <div style="margin-top:20px;">
+            <div class="admin-card">
+                <img src="https://i.ibb.co.com/3mGv4YyK/FB-IMG-1776482627543.jpg" class="admin-img">
+                <div><b>Tamim Commander</b><br>Technical Support<br><a href="tel:01707493733" class="admin-call-btn">📞 Call Now</a></div>
             </div>
-
-            <div style="padding:12px;border-radius:12px;background:rgba(40,167,69,0.15);margin-bottom:10px;border-left:4px solid #28a745;">
-                <b>🏢 Management Support</b><br>
-                <div style="display:flex;align-items:center;gap:8px;">
-                    <img src="https://i.ibb.co.com/LDdPdJBL/Screenshot-20260418-095221.png" style="width:35px;height:35px;border-radius:50%;object-fit:cover;">
-                    <div>
-                        Hridoy Ahmed Omor<br>
-                        <a href="tel:01766-727747" class="admin-call-btn">📞 Call Now</a>
-                    </div>
-                </div>
+            <div class="admin-card">
+                <img src="https://i.ibb.co.com/LDdPdJBL/Screenshot-20260418-095221.png" class="admin-img">
+                <div><b>Hridoy Ahmed Omor</b><br>nagement support <br><a href="tel:01766727747" class="admin-call-btn">📞 Call Now</a></div>
             </div>
-
-            <div style="padding:12px;border-radius:12px;background:rgba(255,193,7,0.15);margin-bottom:10px;border-left:4px solid #ffc107;">
-                <b>⚙️ Service Support</b><br>
-                <div style="display:flex;align-items:center;gap:8px;">
-                    <img src="https://i.ibb.co.com/kscvchHV/FB-IMG-1776483729557.jpg" style="width:35px;height:35px;border-radius:50%;object-fit:cover;">
-                    <div>
-                        Arafat Khan Sayem<br>
-                        <a href="tel:01826168177" class="admin-call-btn">📞 Call Now</a>
-                    </div>
-                </div>
+            <div class="admin-card">
+                <img src="https://i.ibb.co.com/kscvchHV/FB-IMG-1776483729557.jpg" class="admin-img">
+                <div><b>Arafat Khan Sayem</b><br>Service support <br><a href="tel:01826168177" class="admin-call-btn">📞 Call Now</a></div>
             </div>
         </div>
-
-        <button class="close-btn" onclick="closeAdmin()">Close</button>
+        <button class="save-btn" style="background:#666;" onclick="closeAdmin()">Close</button>
     </div>
 </div>
 
+<!-- Dashboard Popup -->
 <div id="dashboard" class="popup">
-    <div class="popup-box" style="max-width:450px;">
-        <h2 style="color:var(--accent); margin-top:0;">📊 Donor Statistics</h2>
-        
-        <div class="stat-grid">
-            <div class="stat-card" style="background:#e8f4fd; color:#0056b3;">
-                <span>Total Donors</span>
-                <b id="total">0</b>
-            </div>
-            <div class="stat-card" style="background:#e9f7ef; color:#1e7e34;">
-                <span>Available Now</span>
-                <b id="eligible">0</b>
-            </div>
-        </div>
-
-        <h3 style="font-size:16px; margin-bottom:10px; opacity:0.8;">Blood Group Summary</h3>
-        <div class="group-grid" id="groupStats">
-            <div class="group-item"><span>A+</span><b id="count-Ap">0</b></div>
-            <div class="group-item"><span>A-</span><b id="count-An">0</b></div>
-            <div class="group-item"><span>B+</span><b id="count-Bp">0</b></div>
-            <div class="group-item"><span>B-</span><b id="count-Bn">0</b></div>
-            <div class="group-item"><span>O+</span><b id="count-Op">0</b></div>
-            <div class="group-item"><span>O-</span><b id="count-On">0</b></div>
-            <div class="group-item"><span>AB+</span><b id="count-ABp">0</b></div>
-            <div class="group-item"><span>AB-</span><b id="count-ABn">0</b></div>
-        </div>
-
-        <button class="save-btn" onclick="closeDashboard()" style="margin-top:25px;">Back to Home</button>
+    <div class="popup-box" style="max-width: 450px;">
+        <h2 style="color:#28a745;">📊 Live Statistics</h2>
+        <div id="groupStats" class="dashboard-stats"></div>
+        <button class="save-btn" onclick="closeDashboard()">Back Home</button>
     </div>
 </div>
 
-<div class="watermark">Developed by Tamim Commander (Admin)</div>
+<!-- Comments Popup - All English text -->
+<div id="commentsPopup" class="popup">
+    <div class="popup-box">
+        <h2 style="color:#17a2b8;"> Feedback & Suggestions</h2>
+        <div id="commentsList" style="max-height: 300px; overflow-y: auto; margin-bottom: 15px;"></div>
+        <input type="text" id="commentName" placeholder="Your Name" style="width:100%; margin-bottom:8px;">
+        <textarea id="commentMsg" rows="3" placeholder="Write your comment..." style="width:100%; margin-bottom:8px;"></textarea>
+        <button class="save-btn" style="background:#17a2b8;" onclick="postComment()">Post Comment</button>
+        <button class="save-btn" style="background:#666; margin-top:8px;" onclick="closeComments()">Close</button>
+    </div>
+</div>
+
+<div class="watermark">Developed by Tamim Commander</div>
 
 <script>
-const firebaseConfig = {
-    apiKey: "AIzaSyCDX-z22aHNgIO3dzmZ7iOPolCuT-XC_eA",
-    databaseURL: "https://hridoy-blood-bank-bangla-ce1d3-default-rtdb.firebaseio.com"
-};
+const firebaseConfig = { apiKey: "AIzaSyCDX-z22aHNgIO3dzmZ7iOPolCuT-XC_eA", databaseURL: "https://hridoy-blood-bank-bangla-ce1d3-default-rtdb.firebaseio.com" };
 firebase.initializeApp(firebaseConfig);
 const fireDb = firebase.database();
-
-const locationDB = {
-    "Bagerhat": ["Bagerhat Sadar", "Chitalmari", "Fakirhat", "Kachua", "Mollahat", "Mongla", "Morrelganj", "Rampal", "Sarankhola"],
-    "Bandarban": ["Bandarban Sadar", "Alikadam", "Thanchi", "Rowangchhari", "Lama", "Ruma", "Naikhongchhari"],
-    "Barguna": ["Barguna Sadar", "Amtali", "Betagi", "Bamna", "Patharghata", "Taltali"],
-    "Barishal": ["Barishal Sadar", "Bakerganj", "Babuganj", "Banaripara", "Gournadi", "Hizla", "Mehendiganj", "Muladi", "Wazirpur"],
-    "Bhola": ["Bhola Sadar", "Burhanuddin", "Char Fasson", "Daulatkhan", "Lalmohan", "Manpura", "Tazumuddin"],
-    "Bogura": ["Bogura Sadar", "Adamdighi", "Dhunat", "Dhupchanchia", "Gabtali", "Kahaloo", "Nandigram", "Sariakandi", "Shajahanpur", "Sherpur", "Shibganj", "Sonatola"],
-    "Brahmanbaria": ["Brahmanbaria Sadar", "Ashuganj", "Bancharampur", "Kasba", "Nabinagar", "Nasirnagar", "Sarail", "Bijoynagar"],
-    "Chandpur": ["Chandpur Sadar", "Faridganj", "Haimchar", "Haziganj", "Kachua", "Matlab North", "Matlab South", "Shahrasti"],
-    "Chittagong": ["Anwara", "Banshkhali", "Boalkhali", "Chandanaish", "Fatikchhari", "Hathazari", "Lohagara", "Mirsharai", "Patiya", "Rangunia", "Raozan", "Sandwip", "Satkania", "Sitakunda"],
-    "Chuadanga": ["Chuadanga Sadar", "Alamdanga", "Damurhuda", "Jibannagar"],
-    "Cumilla": ["Cumilla Sadar", "Barura", "Brahmanpara", "Burichang", "Chandina", "Chauddagram", "Daudkandi", "Debidwar", "Homna", "Laksam", "Muradnagar", "Nangalkot", "Titas"],
-    "Cox's Bazar": ["Cox's Bazar Sadar", "Chakaria", "Kutubdia", "Maheshkhali", "Ramu", "Teknaf", "Ukhia", "Pekua"],
-    "Dhaka": ["Dhamrai", "Dohar", "Keraniganj", "Nawabganj", "Savar"],
-    "Dinajpur": ["Dinajpur Sadar", "Birampur", "Birganj", "Birol", "Bochaganj", "Chirirbandar", "Phulbari", "Ghoraghat", "Hakimpur", "Kaharole", "Khansama", "Nawabganj", "Parbatipur"],
-    "Faridpur": ["Faridpur Sadar", "Alfadanga", "Bhanga", "Boalmari", "Charbhadrasan", "Madhukhali", "Nagarkanda", "Sadarpur", "Saltha"],
-    "Feni": ["Feni Sadar", "Chhagalnaiya", "Daganbhuiyan", "Parshuram", "Sonagazi", "Fulgazi"],
-    "Gaibandha": ["Gaibandha Sadar", "Phulchhari", "Gobindaganj", "Palashbari", "Sadullapur", "Saghata", "Sundarganj"],
-    "Gazipur": ["Gazipur Sadar", "Kaliakair", "Kaliganj", "Kapasia", "Sreepur"],
-    "Gopalganj": ["Gopalganj Sadar", "Kashiani", "Kotalipara", "Muksudpur", "Tungipara"],
-    "Habiganj": ["Habiganj Sadar", "Ajmiriganj", "Bahubal", "Baniyachong", "Chunarughat", "Madhabpur", "Nabiganj", "Lakhai"],
-    "Jamalpur": ["Jamalpur Sadar", "Bakshiganj", "Dewanganj", "Islampur", "Madarganj", "Melandaha", "Sarishabari"],
-    "Jashore": ["Jashore Sadar", "Abhaynagar", "Bagherpara", "Chaugachha", "Jhikargachha", "Keshabpur", "Manirampur", "Sharsha"],
-    "Jhalokati": ["Jhalokati Sadar", "Kathalia", "Nalchity", "Rajapur"],
-    "Jhenaidah": ["Jhenaidah Sadar", "Harinakunda", "Kaliganj", "Kotchandpur", "Maheshpur", "Shailkupa"],
-    "Joypurhat": ["Joypurhat Sadar", "Akkelpur", "Kalai", "Khetlal", "Panchbibi"],
-    "Khagrachhari": ["Khagrachhari Sadar", "Dighinala", "Lakshmichhari", "Mahalchhari", "Manikchhari", "Matiranga", "Panchhari", "Ramgarh"],
-    "Khulna": ["Batiaghata", "Dacope", "Dumuria", "Dighalia", "Koyra", "Paikgachha", "Phultala", "Rupsha", "Terokhada"],
-    "Kishoreganj": ["Kishoreganj Sadar", "Austagram", "Bajitpur", "Bhairab", "Hossainpur", "Itna", "Karimganj", "Katiadi", "Kuliarchar", "Mithamain", "Nikli", "Pakundia", "Tarail"],
-    "Kurigram": ["Kurigram Sadar", "Bhurungamari", "Char Rajibpur", "Chilmari", "Phulbari", "Nageshwari", "Rajarhat", "Roumari", "Ulipur"],
-    "Kushtia": ["Kushtia Sadar", "Bheramara", "Daulatpur", "Khoksa", "Kumarkhali", "Mirpur"],
-    "Lakshmipur": ["Lakshmipur Sadar", "Raipur", "Ramganj", "Ramgati", "Kamalnagar"],
-    "Lalmonirhat": ["Lalmonirhat Sadar", "Aditmari", "Hatibandha", "Kaliganj", "Patgram"],
-    "Madaripur": ["Madaripur Sadar", "Kalkini", "Rajoir", "Shibchar"],
-    "Magura": ["Magura Sadar", "Mohammadpur", "Shalikha", "Sreepur"],
-    "Manikganj": ["Manikganj Sadar", "Singair", "Shibalaya", "Saturia", "Harirampur", "Ghiror", "Daulatpur"],
-    "Meherpur": ["Meherpur Sadar", "Gangni", "Mujibnagar"],
-    "Moulvibazar": ["Moulvibazar Sadar", "Barlekha", "Juri", "Kamalganj", "Kulaura", "Rajnagar", "Sreemangal"],
-    "Munshiganj": ["Munshiganj Sadar", "Gazaria", "Lohajang", "Sirajdikhan", "Sreenagar", "Tongibari"],
-    "Mymensingh": ["Mymensingh Sadar", "Bhaluka", "Dhobaura", "Fulbaria", "Gaffargaon", "Gauripur", "Haluaghat", "Ishwarganj", "Muktagachha", "Nandail", "Phulpur", "Trishal", "Tara Khanda"],
-    "Naogaon": ["Naogaon Sadar", "Atrai", "Badalgachhi", "Dhamoirhat", "Manda", "Mahadevpur", "Niamatpur", "Patnitala", "Porsha", "Raninagar", "Sapahar"],
-    "Narail": ["Narail Sadar", "Kalia", "Lohagara"],
-    "Narayanganj": ["Narayanganj Sadar", "Araihazar", "Bandar", "Rupganj", "Sonargaon"],
-    "Narsingdi": ["Narsingdi Sadar", "Belabo", "Monohardi", "Palash", "Raipura", "Shibpur"],
-    "Natore": ["Natore Sadar", "Bagatipara", "Baraigram", "Gurudaspur", "Lalpur", "Singra", "Naldanga"],
-    "Netrokona": ["Netrokona Sadar", "Atpara", "Barhatta", "Durgapur", "Khaliajuri", "Kalmakanda", "Kendua", "Madan", "Mohanganj", "Purbadhala"],
-    "Nilphamari": ["Nilphamari Sadar", "Dimla", "Domar", "Jaldhaka", "Kishoreganj", "Saidpur"],
-    "Noakhali": ["Noakhali Sadar", "Begumganj", "Chatkhil", "Companiganj", "Hatiya", "Senbagh", "Sonaimuri", "Subarnachar", "Kabirhat"],
-    "Pabna": ["Pabna Sadar", "Atgharia", "Bera", "Bhangura", "Chatmohar", "Faridpur", "Ishwardi", "Santhia", "Sujanagar"],
-    "Panchagarh": ["Panchagarh Sadar", "Atwari", "Boda", "Debiganj", "Tetulia"],
-    "Patuakhali": ["Patuakhali Sadar", "Bauphal", "Dashmina", "Galachipa", "Kalapara", "Mirzaganj", "Rangabali", "Dumki"],
-    "Pirojpur": ["Pirojpur Sadar", "Bhandaria", "Kawkhali", "Mathbaria", "Nazirpur", "Nesarabad", "Indurkani"],
-    "Rajbari": ["Rajbari Sadar", "Baliakandi", "Goalanda", "Pangsha", "Kalukhali"],
-    "Rajshahi": ["Bagha", "Bagmara", "Charghat", "Durgapur", "Godagari", "Mohanpur", "Paba", "Puthia", "Tanore"],
-    "Rangamati": ["Rangamati Sadar", "Baghaichhari", "Barkal", "Kawkhali", "Belaichhari", "Kaptai", "Jurachhari", "Langadu", "Naniyarchar", "Rajasthali"],
-    "Rangpur": ["Rangpur Sadar", "Badarganj", "Gangachara", "Kaunia", "Mithapukur", "Pirgachha", "Pirganj", "Taraganj"],
-    "Satkhira": ["Satkhira Sadar", "Assasuni", "Debhata", "Kalaroa", "Kaliganj", "Shyamnagar", "Tala"],
-    "Shariatpur": ["Shariatpur Sadar", "Bhedarganj", "Damudya", "Gosairhat", "Naria", "Zajira"],
-    "Sherpur": ["Sherpur Sadar", "Jhenaigati", "Nakla", "Nalitabari", "Sreebardi"],
-    "Sirajganj": ["Sirajganj Sadar", "Belkuchi", "Chauhali", "Kamarkhanda", "Kazipur", "Raiganj", "Shahjadpur", "Tarash", "Ullahpara"],
-    "Sunamganj": ["Sunamganj Sadar", "Bishwamvapur", "Chhatak", "Derai", "Dharamapasha", "Dowarabazar", "Jagannathpur", "Jamalganj", "Sullah", "Tahirpur", "South Sunamganj"],
-    "Sylhet": ["Sylhet Sadar", "Beanibazar", "Bishwanath", "Fenchuganj", "Golapganj", "Gowainghat", "Jaintiapur", "Kanaighat", "Zakiganj"],
-    "Tangail": ["Tangail Sadar", "Basail", "Bhuapur", "Delduar", "Ghatail", "Gopalpur", "Kalihati", "Madhupur", "Mirzapur", "Nagarpur", "Sakhipur", "Dhanbari"],
-    "Thakurgaon": ["Thakurgaon Sadar", "Baliadangi", "Haripur", "Pirganj", "Ranisankail"]
-};
-
 let isAdmin = false;
 
-function filterDonors() {
-    let query = document.getElementById("mainSearch").value.toLowerCase().trim();
-    let cards = document.querySelectorAll(".donor-card");
-    let visibleCount = 0;
-    cards.forEach(card => {
-        let txt = card.innerText.toLowerCase();
-        if (txt.includes(query)) {
-            card.style.display = "block"; visibleCount++;
-        } else { card.style.display = "none"; }
-    });
-    document.getElementById("listTitle").innerText = query === "" ? "সকল ডোনার তালিকা" : `সার্চ রেজাল্ট (${visibleCount})`;
+// Location DB (same)
+const locationDB = {
+    "Bagerhat": ["Bagerhat Sadar", "Chitalmari", "Fakirhat", "Kachua", "Mollahat", "Mongla", "Morrelganj", "Rampal", "Sarankhola"],
+    "Barishal": ["Barishal Sadar", "Bakerganj", "Babuganj", "Banaripara", "Gournadi", "Hizla", "Mehendiganj", "Muladi", "Wazirpur"],
+    "Bogura": ["Bogura Sadar", "Adamdighi", "Dhunat", "Dhupchanchia", "Gabtali", "Kahaloo", "Nandigram", "Sariakandi", "Shajahanpur", "Sherpur", "Shibganj", "Sonatola"],
+    "Chattogram": ["Anwara", "Banshkhali", "Boalkhali", "Chandanaish", "Fatikchhari", "Hathazari", "Lohagara", "Mirsharai", "Patiya", "Rangunia", "Raozan", "Sandwip", "Satkania", "Sitakunda"],
+    "Cumilla": ["Barura", "Brahmanpara", "Burichang", "Chandina", "Chauddagram", "Daudkandi", "Debidwar", "Homna", "Laksam", "Muradnagar", "Nangalkot", "Titas"],
+    "Dhaka": ["Dhamrai", "Dohar", "Keraniganj", "Nawabganj", "Savar", "Dhaka City"],
+    "Feni": ["Feni Sadar", "Chhagalnaiya", "Daganbhuiyan", "Parshuram", "Sonagazi", "Fulgazi"],
+    "Gazipur": ["Gazipur Sadar", "Kaliakair", "Kaliganj", "Kapasia", "Sreepur"],
+    "Noakhali": ["Noakhali Sadar", "Begumganj", "Chatkhil", "Companiganj", "Hatiya", "Senbagh", "Sonaimuri", "Subarnachar", "Kabirhat"],
+    "Sylhet": ["Sylhet Sadar", "Beanibazar", "Bishwanath", "Fenchuganj", "Golapganj", "Gowainghat", "Jaintiapur", "Kanaighat", "Zakiganj"]
+};
+
+const sDist = document.getElementById('searchDist'), rDist = document.getElementById('regDist');
+Object.keys(locationDB).sort().forEach(d => {
+    sDist.add(new Option(d, d));
+    rDist.add(new Option(d, d));
+});
+
+function loadSearchUpazila(){
+    const sUpz = document.getElementById('searchUpz');
+    sUpz.innerHTML = '<option value="">All Upazila</option>';
+    if(sDist.value && locationDB[sDist.value]) locationDB[sDist.value].sort().forEach(u => sUpz.add(new Option(u, u)));
 }
-
-const dInp = document.getElementById('distInput');
-const uInp = document.getElementById('upzInput');
-const dBox = document.getElementById('distList');
-const uBox = document.getElementById('upzList');
-let selectedDistrict = "";
-
-dInp.addEventListener('input', function() {
-    const val = this.value.trim().toLowerCase();
-    dBox.innerHTML = "";
-    if (!val) { dBox.style.display = "none"; return; }
-    const matches = Object.keys(locationDB).filter(d => d.toLowerCase().includes(val));
-    if (matches.length > 0) {
-        dBox.style.display = "block";
-        matches.forEach(name => {
-            const div = document.createElement('div'); div.className = 'suggest-item'; div.innerText = name;
-            div.onclick = () => { dInp.value = name; selectedDistrict = name; dBox.style.display = "none"; uInp.disabled = false; uInp.classList.remove('locked'); uInp.value = ""; };
-            dBox.appendChild(div);
-        });
-    }
-});
-
-uInp.addEventListener('input', function() {
-    const val = this.value.toLowerCase();
-    uBox.innerHTML = "";
-    if (!selectedDistrict) return;
-    const matches = locationDB[selectedDistrict].filter(u => u.toLowerCase().includes(val));
-    if (matches.length > 0) {
-        uBox.style.display = "block";
-        matches.forEach(u => {
-            const div = document.createElement('div'); div.className = 'suggest-item'; div.innerText = u;
-            div.onclick = () => { uInp.value = u; uBox.style.display = "none"; };
-            uBox.appendChild(div);
-        });
-    }
-});
+function loadRegUpazila(){
+    const rUpz = document.getElementById('regUpz');
+    rUpz.innerHTML = '<option value="">Select Upazila</option>';
+    if(rDist.value && locationDB[rDist.value]) locationDB[rDist.value].sort().forEach(u => rUpz.add(new Option(u, u)));
+}
 
 function saveDonor(){
-    let name=document.getElementById("name").value.trim();
-    let phone=document.getElementById("phone").value.trim();
-    let dist=dInp.value.trim();
-    let upz=uInp.value.trim();
-    let local=document.getElementById("localNote").value.trim();
-    let group=document.getElementById("bloodGroup").value;
-    let lastDonate=document.getElementById("lastDonate").value || "";
-    if(!name || !phone || !dist || !upz || !group){ alert("ব্লাড গ্রুপসহ সব তথ্য দিন!"); return; }
-    let addr = `${local}, ${upz}, ${dist}`;
-    // Fixed save to use bloodGroup
-    fireDb.ref("donors").push({ name, phone, address: addr, bloodGroup: group, lastDonate, time:Date.now() });
-    alert("রেজিস্ট্রেশন সফল হয়েছে!");
-    location.reload(); 
+    let name=document.getElementById("name").value.trim(), phone=document.getElementById("phone").value.trim(), dist=rDist.value, upz=document.getElementById("regUpz").value, group=document.getElementById("bloodGroup").value, last=document.getElementById("lastDonate").value;
+    if(!name || !phone || !dist || !upz || !group){ alert("Please fill all fields!"); return; }
+    fireDb.ref("donors").push({ name, phone, address: `${upz}, ${dist}`, bloodGroup: group, lastDonate: last, time: Date.now() })
+    .then(()=>{ alert("Registered Successfully!"); document.getElementById("name").value=""; document.getElementById("phone").value=""; document.getElementById("lastDonate").value=""; document.getElementById("bloodGroup").value=""; document.getElementById("regDist").value=""; document.getElementById("regUpz").innerHTML='<option value="">Select Upazila</option>'; })
+    .catch(e=>alert(e));
 }
 
+function escapeHtml(str){ if(!str) return ""; return str.replace(/[&<>]/g, m=>({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
+
+// Donors render
 fireDb.ref("donors").on("value", snap => {
-    let list = document.getElementById("donorList");
-    list.innerHTML = "";
-    let total = 0, eligible = 0;
-    
-    // Stats Counter
+    let list = document.getElementById("donorList"); list.innerHTML = "";
     let stats = {"A+":0,"A-":0,"B+":0,"B-":0,"O+":0,"O-":0,"AB+":0,"AB-":0};
-
+    let total = 0;
     snap.forEach(c => {
-        let d = c.val(); total++;
-        // Fixed blood group detection to look for both group and bloodGroup
-        let bGroup = d.bloodGroup || d.group || "N/A";
-        
-        if(stats.hasOwnProperty(bGroup)) stats[bGroup]++;
-        
-        let status = true;
-        if(d.lastDonate){
-            let diff = Math.floor((Date.now()-new Date(d.lastDonate))/(1000*60*60*24));
-            if(diff < 90) status = false;
-        }
-        if(status) eligible++;
-
-        list.innerHTML += `
-        <div class="donor-card">
-            <div class="blood">${bGroup}</div>
-            <b>${d.name}</b><br>📍 ${d.address}<br>📅 শেষ রক্তদান: ${d.lastDonate || "দেওয়া হয়নি"}
-            <button class="call-btn" onclick="window.location='tel:${d.phone}'">Call Now</button>
-            <button class="delete-btn" style="display: ${isAdmin ? 'block' : 'none'}" onclick="deleteDonor('${c.key}')">Delete Donor</button>
-        </div>`;
+        let d = c.val();
+        let bg = d.bloodGroup || "N/A";
+        if(stats.hasOwnProperty(bg)) stats[bg]++;
+        total++;
+        let card = document.createElement("div"); card.className = "donor-card";
+        card.setAttribute("data-blood", bg);
+        let addrParts = (d.address || "").split(",");
+        card.setAttribute("data-dist", addrParts[1]?addrParts[1].trim():"");
+        card.setAttribute("data-upz", addrParts[0]?addrParts[0].trim():"");
+        let deleteBtn = isAdmin ? `<button class="delete-btn" style="background:#dc3545; color:white; width:100%; border:none; margin-top:5px; padding:8px; border-radius:8px;" onclick="deleteDonor('${c.key}')">Delete</button>` : "";
+        card.innerHTML = `
+            <div class="blood-badge">${escapeHtml(bg)}</div>
+            <b style="font-size:18px;">${escapeHtml(d.name)}</b><br>
+            📍 ${escapeHtml(d.address)}<br>
+            📅 Last Donate: ${escapeHtml(d.lastDonate) || "Never"}
+            <button class="call-btn" onclick="window.location='tel:${escapeHtml(d.phone)}'">📞 Call Now</button>
+            ${deleteBtn}
+        `;
+        list.appendChild(card);
     });
-
-    // Update Dashboard Display
-    document.getElementById("total").innerText = total;
-    document.getElementById("eligible").innerText = eligible;
-    document.getElementById("count-Ap").innerText = stats["A+"];
-    document.getElementById("count-An").innerText = stats["A-"];
-    document.getElementById("count-Bp").innerText = stats["B+"];
-    document.getElementById("count-Bn").innerText = stats["B-"];
-    document.getElementById("count-Op").innerText = stats["O+"];
-    document.getElementById("count-On").innerText = stats["O-"];
-    document.getElementById("count-ABp").innerText = stats["AB+"];
-    document.getElementById("count-ABn").innerText = stats["AB-"];
+    let gsDiv = document.getElementById("groupStats");
+    if(gsDiv){
+        let html = `<div class="dash-stat-card dash-total"><span>${total}</span><small>Total Donors</small></div>`;
+        for(let g in stats){
+            html += `<div class="dash-stat-card"><span>${stats[g]}</span><small>${g}</small></div>`;
+        }
+        gsDiv.innerHTML = html;
+    }
+    filterDonors();
 });
 
+function filterDonors(){
+    let blood = document.getElementById("searchBlood").value, dist = document.getElementById("searchDist").value, upz = document.getElementById("searchUpz").value;
+    let cards = document.querySelectorAll(".donor-card"), count=0;
+    cards.forEach(card => {
+        let match = (blood==="" || card.getAttribute("data-blood")===blood) && (dist==="" || card.getAttribute("data-dist")===dist) && (upz==="" || card.getAttribute("data-upz")===upz);
+        card.style.display = match ? "block" : "none";
+        if(match) count++;
+    });
+    document.getElementById("listTitle").innerText = `Found Donors (${count})`;
+}
+
+// Comment functions (English UI)
+function postComment(){
+    let name = document.getElementById("commentName").value.trim();
+    let msg = document.getElementById("commentMsg").value.trim();
+    if(!name || !msg){ alert("Please enter your name and comment!"); return; }
+    fireDb.ref("comments").push({
+        name: name,
+        message: msg,
+        timestamp: Date.now()
+    }).then(()=>{
+        document.getElementById("commentName").value = "";
+        document.getElementById("commentMsg").value = "";
+        alert("Thank you! Your comment has been posted.");
+    }).catch(e=>alert(e));
+}
+
+function deleteComment(key){
+    if(confirm("Delete this comment?")){
+        fireDb.ref("comments/"+key).remove();
+    }
+}
+
+// Load comments realtime
+fireDb.ref("comments").orderByChild("timestamp").on("value", snap => {
+    let container = document.getElementById("commentsList");
+    if(!container) return;
+    container.innerHTML = "";
+    let comments = [];
+    snap.forEach(c => {
+        let com = c.val();
+        com.key = c.key;
+        comments.push(com);
+    });
+    comments.reverse();
+    comments.forEach(com => {
+        let date = new Date(com.timestamp).toLocaleString();
+        let deleteBtn = isAdmin ? `<button class="delete-comment-btn" onclick="deleteComment('${com.key}')">🗑️ Delete</button>` : "";
+        container.innerHTML += `
+            <div class="comment-item">
+                <div class="comment-name">${escapeHtml(com.name)}</div>
+                <div class="comment-time">${date}</div>
+                <div class="comment-text">${escapeHtml(com.message)}</div>
+                ${deleteBtn}
+            </div>
+        `;
+    });
+    if(comments.length === 0) container.innerHTML = "<p style='text-align:center;'>No comments yet. Be the first to share your feedback!</p>";
+});
+
+// UI functions
 function toggleDark(){ document.body.classList.toggle("dark"); }
 function openAdmin(){ document.getElementById("admin").style.display="flex"; }
 function closeAdmin(){ document.getElementById("admin").style.display="none"; }
 function openDashboard(){ document.getElementById("dashboard").style.display="flex"; }
 function closeDashboard(){ document.getElementById("dashboard").style.display="none"; }
+function openNotice(){ document.getElementById("noticePopup").style.display="flex"; }
+function closeNotice(){ document.getElementById("noticePopup").style.display="none"; }
+function openComments(){ document.getElementById("commentsPopup").style.display="flex"; }
+function closeComments(){ document.getElementById("commentsPopup").style.display="none"; }
 
-function secretAdminTrigger(){
-    let pass = prompt("Enter Admin Password:");
-    if(pass === "3358"){
-        isAdmin = true;
-        alert("✅ Admin Mode Active!");
-        document.getElementById("adminAuthArea").style.display = "none";
-        document.getElementById("adminControls").style.display = "block";
-        document.querySelectorAll('.delete-btn').forEach(b => b.style.display = 'block');
-    } else {
-        alert("❌ Wrong Password!");
-    }
-}
+function secretAdminTrigger(){ if(prompt("Admin Password:") === "3358"){ isAdmin=true; document.getElementById("adminAuthArea").style.display="none"; document.getElementById("adminControls").style.display="block"; fireDb.ref("donors").once("value"); alert("Admin Mode Active"); } else alert("Wrong password!"); }
+function logoutAdmin(){ isAdmin=false; fireDb.ref("donors").once("value"); alert("Admin mode off"); }
+function deleteDonor(k){ if(confirm("Delete this donor?")) fireDb.ref("donors/"+k).remove(); }
 
-function logoutAdmin(){
-    isAdmin = false;
-    alert("Admin Mode Logged Out.");
-    document.getElementById("adminAuthArea").style.display = "block";
-    document.getElementById("adminControls").style.display = "none";
-    document.querySelectorAll('.delete-btn').forEach(b => b.style.display = 'none');
-}
-
-function deleteDonor(key){
-    if(confirm("ডোনার ডিলিট করতে চান?")){
-        fireDb.ref("donors/"+key).remove();
-    }
-}
+window.onload = () => { loadSearchUpazila(); loadRegUpazila(); };
 </script>
 </body>
 </html>
