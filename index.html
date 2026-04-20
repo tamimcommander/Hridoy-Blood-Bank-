@@ -17,7 +17,6 @@ body{ font-family:'Inter',Arial; background:var(--bg); color:var(--text); margin
 
 .header{ text-align:center; font-weight:800; font-size:28px; color:#fff; padding:18px 10px; border-radius:14px; margin-bottom:15px; font-family:'Poppins',sans-serif; background:linear-gradient(45deg,#d9534f,#ff3b3b,#b30000); }
 
-/* Two-line button bar */
 .topbar {
     display: flex;
     flex-direction: column;
@@ -193,7 +192,6 @@ body.dark .popup-box {background: #1a1a1a; color: #fff;}
 
 <div class="header">🩸 Hridoy Blood Bank</div>
 
-<!-- Two-line button bar -->
 <div class="topbar">
     <div class="button-row">
         <button class="dashboard-btn" onclick="openDashboard()">📊 Dashboard</button>
@@ -222,7 +220,7 @@ body.dark .popup-box {background: #1a1a1a; color: #fff;}
 
     <h3>Donor Registration</h3>
     <input id="name" placeholder="Donor Name">
-    <input id="phone" placeholder="Phone Number">
+    <input id="phone" type="tel" placeholder="Phone Number (e.g. 01712345678)">
     <select id="regDist" onchange="loadRegUpazila()"><option value="">Select District</option></select>
     <select id="regUpz"><option value="">Select Upazila</option></select>
     <select id="bloodGroup">
@@ -238,7 +236,6 @@ body.dark .popup-box {background: #1a1a1a; color: #fff;}
     <div id="donorList"></div>
 </div>
 
-<!-- Notice Popup (Bangla content remains as per your request) -->
 <div id="noticePopup" class="popup">
     <div class="popup-box">
         <h2 style="color:#ffc107;">📢 রক্তদান সংক্রান্ত তথ্য</h2>
@@ -260,7 +257,6 @@ body.dark .popup-box {background: #1a1a1a; color: #fff;}
     </div>
 </div>
 
-<!-- Admin Popup -->
 <div id="admin" class="popup">
     <div class="popup-box">
         <h2 style="color:#007bff;">👨‍💼 Admin Panel</h2>
@@ -290,7 +286,6 @@ body.dark .popup-box {background: #1a1a1a; color: #fff;}
     </div>
 </div>
 
-<!-- Dashboard Popup -->
 <div id="dashboard" class="popup">
     <div class="popup-box" style="max-width: 450px;">
         <h2 style="color:#28a745;">📊 Live Statistics</h2>
@@ -299,7 +294,6 @@ body.dark .popup-box {background: #1a1a1a; color: #fff;}
     </div>
 </div>
 
-<!-- Comments Popup - All English text -->
 <div id="commentsPopup" class="popup">
     <div class="popup-box">
         <h2 style="color:#17a2b8;"> Feedback & Suggestions</h2>
@@ -319,18 +313,70 @@ firebase.initializeApp(firebaseConfig);
 const fireDb = firebase.database();
 let isAdmin = false;
 
-// Location DB (same)
 const locationDB = {
     "Bagerhat": ["Bagerhat Sadar", "Chitalmari", "Fakirhat", "Kachua", "Mollahat", "Mongla", "Morrelganj", "Rampal", "Sarankhola"],
+    "Bandarban": ["Bandarban Sadar", "Alikadam", "Lama", "Naikhongchhari", "Rowangchhari", "Ruma", "Thanchi"],
+    "Barguna": ["Barguna Sadar", "Amtali", "Bamna", "Betagi", "Patharghata", "Taltali"],
     "Barishal": ["Barishal Sadar", "Bakerganj", "Babuganj", "Banaripara", "Gournadi", "Hizla", "Mehendiganj", "Muladi", "Wazirpur"],
-    "Bogura": ["Bogura Sadar", "Adamdighi", "Dhunat", "Dhupchanchia", "Gabtali", "Kahaloo", "Nandigram", "Sariakandi", "Shajahanpur", "Sherpur", "Shibganj", "Sonatola"],
+    "Bhola": ["Bhola Sadar", "Burhanuddin", "Char Fasson", "Daulatkhan", "Lalmohan", "Manpura", "Tazumuddin"],
+    "Bogra": ["Bogra Sadar", "Adamdighi", "Dhunat", "Dhupchanchia", "Gabtali", "Kahaloo", "Nandigram", "Sariakandi", "Shajahanpur", "Sherpur", "Shibganj", "Sonatola"],
+    "Brahmanbaria": ["Brahmanbaria Sadar", "Akhaura", "Ashuganj", "Bancharampur", "Bijoynagar", "Kasba", "Nabinagar", "Nasirnagar", "Sarail"],
+    "Chandpur": ["Chandpur Sadar", "Faridganj", "Haimchar", "Haziganj", "Kachua", "Matlab North", "Matlab South", "Shahrasti"],
+    "Chapai Nawabganj": ["Chapai Nawabganj Sadar", "Bholahat", "Gomastapur", "Nachole", "Shibganj"],
     "Chattogram": ["Anwara", "Banshkhali", "Boalkhali", "Chandanaish", "Fatikchhari", "Hathazari", "Lohagara", "Mirsharai", "Patiya", "Rangunia", "Raozan", "Sandwip", "Satkania", "Sitakunda"],
-    "Cumilla": ["Barura", "Brahmanpara", "Burichang", "Chandina", "Chauddagram", "Daudkandi", "Debidwar", "Homna", "Laksam", "Muradnagar", "Nangalkot", "Titas"],
+    "Chuadanga": ["Chuadanga Sadar", "Alamdanga", "Damurhuda", "Jibannagar"],
+    "Comilla": ["Barura", "Brahmanpara", "Burichang", "Chandina", "Chauddagram", "Daudkandi", "Debidwar", "Homna", "Laksam", "Muradnagar", "Nangalkot", "Titas"],
+    "Cox's Bazar": ["Cox's Bazar Sadar", "Chakaria", "Kutubdia", "Maheshkhali", "Pekua", "Ramu", "Teknaf", "Ukhia"],
     "Dhaka": ["Dhamrai", "Dohar", "Keraniganj", "Nawabganj", "Savar", "Dhaka City"],
+    "Dinajpur": ["Dinajpur Sadar", "Birampur", "Birganj", "Biral", "Bochaganj", "Chirirbandar", "Ghoraghat", "Hakimpur", "Kaharole", "Khansama", "Nawabganj", "Parbatipur"],
+    "Faridpur": ["Faridpur Sadar", "Alfadanga", "Bhanga", "Boalmari", "Charbhadrasan", "Madhukhali", "Nagarkanda", "Sadarpur", "Saltha"],
     "Feni": ["Feni Sadar", "Chhagalnaiya", "Daganbhuiyan", "Parshuram", "Sonagazi", "Fulgazi"],
+    "Gaibandha": ["Gaibandha Sadar", "Fulchhari", "Gobindaganj", "Palashbari", "Sadullapur", "Saghata", "Sundarganj"],
     "Gazipur": ["Gazipur Sadar", "Kaliakair", "Kaliganj", "Kapasia", "Sreepur"],
+    "Gopalganj": ["Gopalganj Sadar", "Kashiani", "Kotalipara", "Muksudpur", "Tungipara"],
+    "Habiganj": ["Habiganj Sadar", "Ajmiriganj", "Bahubal", "Baniyachong", "Chunarughat", "Lakhai", "Madhabpur", "Nabiganj"],
+    "Jamalpur": ["Jamalpur Sadar", "Bakshiganj", "Dewanganj", "Islampur", "Madarganj", "Melandaha", "Sarishabari"],
+    "Jashore": ["Jashore Sadar", "Abhaynagar", "Bagherpara", "Chaugachha", "Jhikargachha", "Keshabpur", "Manirampur", "Sharsha"],
+    "Jhalokati": ["Jhalokati Sadar", "Kathalia", "Nalchity", "Rajapur"],
+    "Jhenaidah": ["Jhenaidah Sadar", "Harinakundu", "Kaliganj", "Kotchandpur", "Maheshpur", "Shailkupa"],
+    "Joypurhat": ["Joypurhat Sadar", "Akkelpur", "Kalai", "Khetlal", "Panchbibi"],
+    "Khagrachhari": ["Khagrachhari Sadar", "Dighinala", "Lakshmichhari", "Mahalchhari", "Manikchhari", "Matiranga", "Panchhari", "Ramgarh"],
+    "Khulna": ["Khulna Sadar", "Batiaghata", "Dacope", "Dumuria", "Dighalia", "Koyra", "Paikgachha", "Phultala", "Rupsha"],
+    "Kishoreganj": ["Kishoreganj Sadar", "Austagram", "Bajitpur", "Bhairab", "Hossainpur", "Itna", "Karimganj", "Katiadi", "Kuliarchar", "Mithamain", "Nikli", "Pakundia", "Tarail"],
+    "Kurigram": ["Kurigram Sadar", "Bhurungamari", "Char Rajibpur", "Chilmari", "Nageshwari", "Phulbari", "Rajarhat", "Raumari", "Ulipur"],
+    "Kushtia": ["Kushtia Sadar", "Bheramara", "Daulatpur", "Khoksa", "Kumarkhali", "Mirpur"],
+    "Lakshmipur": ["Lakshmipur Sadar", "Kamalnagar", "Raipur", "Ramganj", "Ramgati"],
+    "Lalmonirhat": ["Lalmonirhat Sadar", "Aditmari", "Hatibandha", "Kaliganj", "Patgram"],
+    "Madaripur": ["Madaripur Sadar", "Kalkini", "Rajoir", "Shibganj"],
+    "Magura": ["Magura Sadar", "Mohammadpur", "Shalikha", "Sreepur"],
+    "Manikganj": ["Manikganj Sadar", "Daulatpur", "Ghiror", "Harirampur", "Saturia", "Shivalaya", "Singair"],
+    "Meherpur": ["Meherpur Sadar", "Gangni", "Mujibnagar"],
+    "Moulvibazar": ["Moulvibazar Sadar", "Barlekha", "Kamalganj", "Kulaura", "Rajnagar", "Sreemangal", "Juri"],
+    "Munshiganj": ["Munshiganj Sadar", "Gazaria", "Lauhajang", "Sirajdikhan", "Sreenagar", "Tongibari"],
+    "Mymensingh": ["Mymensingh Sadar", "Bhaluka", "Dhobaura", "Fulbaria", "Gaffargaon", "Gauripur", "Haluaghat", "Ishwarganj", "Muktagachha", "Nandail", "Phulpur", "Trishal"],
+    "Naogaon": ["Naogaon Sadar", "Atrai", "Badalgachhi", "Dhamoirhat", "Manda", "Mahadevpur", "Niamatpur", "Patnitala", "Porsha", "Raninagar", "Sapahar"],
+    "Narail": ["Narail Sadar", "Kalia", "Lohagara"],
+    "Narayanganj": ["Narayanganj Sadar", "Araihazar", "Bandar", "Rupganj", "Sonargaon"],
+    "Narsingdi": ["Narsingdi Sadar", "Belabo", "Monohardi", "Palash", "Raipura", "Shibpur"],
+    "Natore": ["Natore Sadar", "Bagatipara", "Baraigram", "Gurudaspur", "Lalpur", "Singra"],
+    "Netrokona": ["Netrokona Sadar", "Atpara", "Barhatta", "Durgapur", "Khaliajuri", "Kalmakanda", "Kendua", "Madan", "Mohanganj", "Purbadhala"],
+    "Nilphamari": ["Nilphamari Sadar", "Dimla", "Domar", "Jaldhaka", "Kishoreganj", "Saidpur"],
     "Noakhali": ["Noakhali Sadar", "Begumganj", "Chatkhil", "Companiganj", "Hatiya", "Senbagh", "Sonaimuri", "Subarnachar", "Kabirhat"],
-    "Sylhet": ["Sylhet Sadar", "Beanibazar", "Bishwanath", "Fenchuganj", "Golapganj", "Gowainghat", "Jaintiapur", "Kanaighat", "Zakiganj"]
+    "Pabna": ["Pabna Sadar", "Atgharia", "Bera", "Bhangura", "Chatmohar", "Faridpur", "Ishwardi", "Santhia", "Sujanagar"],
+    "Panchagarh": ["Panchagarh Sadar", "Atwari", "Boda", "Debiganj", "Tetulia"],
+    "Patuakhali": ["Patuakhali Sadar", "Bauphal", "Dashmina", "Galachipa", "Kalapara", "Mirzaganj", "Rangabali"],
+    "Rajbari": ["Rajbari Sadar", "Baliakandi", "Goalandaghat", "Pangsha", "Kalukhali"],
+    "Rajshahi": ["Rajshahi City", "Bagha", "Bagmara", "Charghat", "Durgapur", "Godagari", "Mohanpur", "Paba", "Puthia", "Tanore"],
+    "Rangamati": ["Rangamati Sadar", "Bagaichhari", "Barkal", "Kawkhali", "Langadu", "Nanighat", "Rajasthali"],
+    "Rangpur": ["Rangpur Sadar", "Badarganj", "Gangachara", "Kaunia", "Mithapukur", "Pirgachha", "Pirganj", "Taraganj"],
+    "Satkhira": ["Satkhira Sadar", "Assasuni", "Debhata", "Kalaroa", "Kaliganj", "Shyamnagar", "Tala"],
+    "Shariatpur": ["Shariatpur Sadar", "Bhedarganj", "Damudya", "Gosairhat", "Naria", "Zajira"],
+    "Sherpur": ["Sherpur Sadar", "Jhenaigati", "Nakla", "Nalitabari", "Sreebardi"],
+    "Sirajganj": ["Sirajganj Sadar", "Belkuchi", "Chauhali", "Kamarkhanda", "Kazipur", "Raiganj", "Shahjadpur", "Tarash", "Ullahpara"],
+    "Sunamganj": ["Sunamganj Sadar", "Bishwamirpur", "Chhatak", "Dakshin Sunamganj", "Derai", "Dharamapasha", "Doarabazar", "Jagannathpur", "Jamalganj", "Sullah", "Tahirpur"],
+    "Sylhet": ["Sylhet Sadar", "Beanibazar", "Bishwanath", "Fenchuganj", "Golapganj", "Gowainghat", "Jaintiapur", "Kanaighat", "Zakiganj", "Companiganj"],
+    "Tangail": ["Tangail Sadar", "Basail", "Bhuapur", "Delduar", "Gopalpur", "Ghatail", "Kalihati", "Madhupur", "Mirzapur", "Nagarpur", "Sakhipur"],
+    "Thakurgaon": ["Thakurgaon Sadar", "Baliadangi", "Haripur", "Pirganj", "Ranisankail"]
 };
 
 const sDist = document.getElementById('searchDist'), rDist = document.getElementById('regDist');
@@ -350,17 +396,46 @@ function loadRegUpazila(){
     if(rDist.value && locationDB[rDist.value]) locationDB[rDist.value].sort().forEach(u => rUpz.add(new Option(u, u)));
 }
 
+// Updated saveDonor with Duplicate and 11-digit check
 function saveDonor(){
-    let name=document.getElementById("name").value.trim(), phone=document.getElementById("phone").value.trim(), dist=rDist.value, upz=document.getElementById("regUpz").value, group=document.getElementById("bloodGroup").value, last=document.getElementById("lastDonate").value;
+    let name=document.getElementById("name").value.trim(), 
+        phone=document.getElementById("phone").value.trim(), 
+        dist=rDist.value, 
+        upz=document.getElementById("regUpz").value, 
+        group=document.getElementById("bloodGroup").value, 
+        last=document.getElementById("lastDonate").value;
+
     if(!name || !phone || !dist || !upz || !group){ alert("Please fill all fields!"); return; }
-    fireDb.ref("donors").push({ name, phone, address: `${upz}, ${dist}`, bloodGroup: group, lastDonate: last, time: Date.now() })
-    .then(()=>{ alert("Registered Successfully!"); document.getElementById("name").value=""; document.getElementById("phone").value=""; document.getElementById("lastDonate").value=""; document.getElementById("bloodGroup").value=""; document.getElementById("regDist").value=""; document.getElementById("regUpz").innerHTML='<option value="">Select Upazila</option>'; })
-    .catch(e=>alert(e));
+    
+    // Bangladeshi 11 digit number check
+    const phonePattern = /^01[3-9]\d{8}$/;
+    if(!phonePattern.test(phone)){
+        alert("Please enter a valid 11-digit Bangladeshi mobile number (e.g. 01712345678)");
+        return;
+    }
+
+    // Check for Duplicated Number in Firebase
+    fireDb.ref("donors").orderByChild("phone").equalTo(phone).once("value", snapshot => {
+        if (snapshot.exists()) {
+            alert("This phone number is already registered!");
+        } else {
+            fireDb.ref("donors").push({ name, phone, address: `${upz}, ${dist}`, bloodGroup: group, lastDonate: last, time: Date.now() })
+            .then(()=>{ 
+                alert("Registered Successfully!"); 
+                document.getElementById("name").value=""; 
+                document.getElementById("phone").value=""; 
+                document.getElementById("lastDonate").value=""; 
+                document.getElementById("bloodGroup").value=""; 
+                document.getElementById("regDist").value=""; 
+                document.getElementById("regUpz").innerHTML='<option value="">Select Upazila</option>'; 
+            })
+            .catch(e=>alert(e));
+        }
+    });
 }
 
 function escapeHtml(str){ if(!str) return ""; return str.replace(/[&<>]/g, m=>({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
 
-// Donors render
 fireDb.ref("donors").on("value", snap => {
     let list = document.getElementById("donorList"); list.innerHTML = "";
     let stats = {"A+":0,"A-":0,"B+":0,"B-":0,"O+":0,"O-":0,"AB+":0,"AB-":0};
@@ -408,7 +483,6 @@ function filterDonors(){
     document.getElementById("listTitle").innerText = `Found Donors (${count})`;
 }
 
-// Comment functions (English UI)
 function postComment(){
     let name = document.getElementById("commentName").value.trim();
     let msg = document.getElementById("commentMsg").value.trim();
@@ -430,7 +504,6 @@ function deleteComment(key){
     }
 }
 
-// Load comments realtime
 fireDb.ref("comments").orderByChild("timestamp").on("value", snap => {
     let container = document.getElementById("commentsList");
     if(!container) return;
@@ -457,7 +530,6 @@ fireDb.ref("comments").orderByChild("timestamp").on("value", snap => {
     if(comments.length === 0) container.innerHTML = "<p style='text-align:center;'>No comments yet. Be the first to share your feedback!</p>";
 });
 
-// UI functions
 function toggleDark(){ document.body.classList.toggle("dark"); }
 function openAdmin(){ document.getElementById("admin").style.display="flex"; }
 function closeAdmin(){ document.getElementById("admin").style.display="none"; }
