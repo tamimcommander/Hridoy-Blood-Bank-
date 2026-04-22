@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hridoy Blood Bank</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Hridoy Blood Bank | Donor Management</title>
 
+<!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
+<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 
 <style>
@@ -20,24 +22,26 @@ body{ font-family:'Inter',Arial; background:var(--bg); color:var(--text); margin
 .topbar {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
     margin-bottom: 20px;
 }
 .button-row {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 .topbar button {
-    flex: 1;
-    padding: 6px 12px;
+    padding: 8px 12px;
     font-size: 0.85rem;
     border: none;
-    border-radius: 30px;
+    border-radius: 40px;
     font-weight: 600;
     cursor: pointer;
-    white-space: nowrap;
     text-align: center;
+    transition: all 0.2s ease;
+    flex: 1 0 auto;
+    white-space: nowrap;
 }
 .dashboard-btn{background:#28a745;color:#fff;}
 .dark-btn{background:#374151;color:#fff;}
@@ -45,6 +49,34 @@ body{ font-family:'Inter',Arial; background:var(--bg); color:var(--text); margin
 .notice-btn{background:#ffc107;color:#000;}
 .comment-btn{background:#17a2b8;color:#fff;}
 .group-btn{background:#0084ff;color:#fff;}
+.upload-proof-btn {
+    background: #8b5cf6;
+    color: white;
+}
+.upload-proof-btn:hover {
+    background: #6d3fd8;
+    transform: scale(0.98);
+}
+
+/* Full-width green button (same as Dashboard color, same size as Save Donor Info) */
+.full-width-green-btn {
+    width: 100%;
+    background: #28a745;
+    color: white;
+    font-weight: 800;
+    font-size: 1.1rem;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 0 2px 8px rgba(40,167,69,0.3);
+}
+.full-width-green-btn:hover {
+    background: #1e7e34;
+    transform: translateY(-1px);
+}
 
 .container{ max-width:520px; margin:auto; background:var(--card); padding:20px; border-radius:16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
 body.dark .container{background:#111;color:#fff;}
@@ -62,7 +94,7 @@ input, select, textarea {
     color: inherit;
 }
 
-.search-section {
+.search-section, .registration-section {
     background: rgba(217, 83, 79, 0.05);
     padding: 15px;
     border-radius: 12px;
@@ -70,7 +102,17 @@ input, select, textarea {
     border: 1px dashed var(--accent);
 }
 
-.find-btn { width: 100%; background: #fff; color: var(--accent); border: 2px solid var(--accent); padding: 10px; border-radius: 30px; font-weight: 700; margin-top: 10px; cursor: pointer; }
+.find-btn { 
+    width: 100%; 
+    background: #fff; 
+    color: var(--accent); 
+    border: 2px solid var(--accent); 
+    padding: 10px; 
+    border-radius: 30px; 
+    font-weight: 700; 
+    margin-top: 10px; 
+    cursor: pointer;
+}
 .save-btn{width:100%;background:var(--accent);color:#fff;margin-top:15px; padding: 12px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer;}
 
 .donor-card{ border-left:6px solid var(--accent); padding:15px; margin-top:12px; border-radius:14px; box-shadow:0 6px 18px rgba(0,0,0,0.08); position:relative; text-align: left; background: var(--card);}
@@ -86,9 +128,9 @@ body.dark .donor-card {background: #1a1a1a;}
 }
 .call-btn{width:100%;background:#28a745;color:#fff;margin-top:10px; padding: 10px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;}
 
-.popup{ position:fixed; top:0;left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:none; justify-content:center; align-items:center; z-index: 10000; }
-.popup-box{ background:#fff; padding:25px; border-radius:20px; width:92%; max-width:420px; text-align:center; max-height: 85vh; overflow-y: auto; position: relative;}
-body.dark .popup-box {background: #1a1a1a; color: #fff;}
+.popup{ position:fixed; top:0;left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); display:none; justify-content:center; align-items:center; z-index: 10000; backdrop-filter: blur(3px); }
+.popup-box{ background:#fff; padding:25px; border-radius:24px; width:92%; max-width:420px; text-align:center; max-height: 85vh; overflow-y: auto; position: relative;}
+body.dark .popup-box {background: #1e1e2a; color: #fff;}
 
 .admin-card { 
     padding: 12px; 
@@ -148,7 +190,7 @@ body.dark .popup-box {background: #1a1a1a; color: #fff;}
     opacity: 0.9;
 }
 
-.comment-item {
+.comment-item, .proof-item {
     background: rgba(23,162,184,0.1);
     border-left: 3px solid #17a2b8;
     padding: 10px;
@@ -156,20 +198,13 @@ body.dark .popup-box {background: #1a1a1a; color: #fff;}
     border-radius: 12px;
     text-align: left;
 }
-.comment-name {
-    font-weight: bold;
-    color: #17a2b8;
-}
-.comment-time {
-    font-size: 10px;
-    color: gray;
-    float: right;
-}
-.comment-text {
-    margin-top: 5px;
-    font-size: 13px;
-}
-.delete-comment-btn {
+.proof-item { border-left-color: #8b5cf6; background: rgba(139,92,246,0.1); }
+.comment-name, .proof-name { font-weight: bold; color: #17a2b8; }
+.proof-name { color: #8b5cf6; }
+.comment-time, .proof-time { font-size: 10px; color: gray; float: right; }
+.comment-text, .proof-text { margin-top: 5px; font-size: 13px; }
+.proof-image { max-width: 100%; border-radius: 12px; margin-top: 8px; max-height: 150px; object-fit: cover; }
+.delete-comment-btn, .delete-proof-btn {
     background: #dc3545;
     color: white;
     border: none;
@@ -186,6 +221,26 @@ body.dark .popup-box {background: #1a1a1a; color: #fff;}
 .notice-content h4 { color: var(--accent); margin: 12px 0 5px; }
 .notice-content p { margin: 5px 0; }
 .notice-content ul { margin: 5px 0 10px 20px; padding-left: 0; }
+
+/* Highlight for View All Proofs inside upload popup */
+.view-proofs-highlight {
+    width: 100%;
+    background: linear-gradient(95deg, #ff8c00, #ffb347);
+    color: white;
+    font-weight: 800;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    margin-top: 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    box-shadow: 0 4px 10px rgba(255,140,0,0.3);
+    transition: 0.2s;
+}
+.view-proofs-highlight:hover {
+    background: linear-gradient(95deg, #e07c00, #ffa02e);
+    transform: translateY(-1px);
+}
 </style>
 </head>
 <body>
@@ -193,19 +248,25 @@ body.dark .popup-box {background: #1a1a1a; color: #fff;}
 <div class="header">🩸 Hridoy Blood Bank</div>
 
 <div class="topbar">
+    <!-- First row: Dashboard, Dark, Admin (3 buttons) -->
     <div class="button-row">
         <button class="dashboard-btn" onclick="openDashboard()">📊 Dashboard</button>
         <button class="dark-btn" onclick="toggleDark()">🌙 Dark</button>
         <button class="admin-btn" onclick="openAdmin()">👨‍💼 Admin</button>
     </div>
+    <!-- Second row: Notice, Comments, Group, Upload Proof (4 buttons) -->
     <div class="button-row">
         <button class="notice-btn" onclick="openNotice()">📢 Notice</button>
         <button class="comment-btn" onclick="openComments()">💬 Comments</button>
         <button class="group-btn" onclick="window.open('https://m.me/j/AbbwNwnn9NjKLPTS/','_blank')">💬 Group</button>
+        <button class="upload-proof-btn" onclick="openUploadProofPopup()">📸 Upload Proof</button>
     </div>
 </div>
 
 <div class="container">
+    <!-- VIEW ALL DONOR BUTTON: placed above Find Donor box, green color like Dashboard button, same size as Save Donor Info -->
+    <button class="full-width-green-btn" onclick="viewAllDonorsPopup()">View all Donors </button>
+
     <div class="search-section">
         <h4 style="margin:0 0 10px 0; color:var(--accent); text-align:center;">🔍 Find Blood Donor</h4>
         <select id="searchBlood">
@@ -215,25 +276,57 @@ body.dark .popup-box {background: #1a1a1a; color: #fff;}
         </select>
         <select id="searchDist" onchange="loadSearchUpazila()"><option value="">Select District</option></select>
         <select id="searchUpz"><option value="">All Upazila</option></select>
-        <button class="find-btn" onclick="filterDonors()">Search Now</button>
+        <button class="find-btn" onclick="searchAndShowPopup()">Search Now</button>
     </div>
 
-    <h3>Donor Registration</h3>
-    <input id="name" placeholder="Donor Name">
-    <input id="phone" type="tel" placeholder="Phone Number (e.g. 01712345678)">
-    <select id="regDist" onchange="loadRegUpazila()"><option value="">Select District</option></select>
-    <select id="regUpz"><option value="">Select Upazila</option></select>
-    <select id="bloodGroup">
-        <option value="">Select Blood Group</option>
-        <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
-        <option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
-    </select>
-    <label style="display:block; margin-top:10px; font-size:13px; font-weight:700; color:var(--accent);">Last Donation Date (Optional)</label>
-    <input id="lastDonate" type="date">
-    <button class="save-btn" onclick="saveDonor()">Save Donor Info</button>
-    <hr style="margin: 25px 0; opacity: 0.1;">
-    <h3 id="listTitle">Available Donors</h3>
-    <div id="donorList"></div>
+    <div class="registration-section">
+        <h3 style="margin:0 0 10px 0; color:var(--accent); text-align:center;">📝 Donor Registration</h3>
+        <input id="name" placeholder="Donor Name">
+        <input id="phone" type="tel" placeholder="Phone Number (e.g. 01712345678)">
+        <select id="regDist" onchange="loadRegUpazila()"><option value="">Select District</option></select>
+        <select id="regUpz"><option value="">Select Upazila</option></select>
+        <select id="bloodGroup">
+            <option value="">Select Blood Group</option>
+            <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+            <option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
+        </select>
+        <label style="display:block; margin-top:10px; font-size:13px; font-weight:700; color:var(--accent);">Last Donation Date (Optional)</label>
+        <input id="lastDonate" type="date">
+        <button class="save-btn" onclick="saveDonor()">Save Donor Info</button>
+    </div>
+</div>
+
+<!-- Donor List Popup (for View All and Search) -->
+<div id="donorListPopup" class="popup">
+    <div class="popup-box" style="max-width: 500px;">
+        <h3 id="popupDonorTitle" style="color:var(--accent);">All Donors</h3>
+        <div id="popupDonorList" style="max-height: 400px; overflow-y: auto;"></div>
+        <button class="save-btn" style="background:#666;" onclick="closeDonorListPopup()">Close</button>
+    </div>
+</div>
+
+<!-- Upload Proof Popup (image link) with BIG HIGHLIGHTED View All Proofs button -->
+<div id="uploadProofPopup" class="popup">
+    <div class="popup-box">
+        <h2 style="color:#8b5cf6;">📸 Upload Donation Proof</h2>
+        <input type="text" id="proofName" placeholder="Your Name" required>
+        <input type="text" id="proofImageLink" placeholder="Image Link (direct URL)" required>
+        <textarea id="proofNote" rows="3" placeholder="Write a short note... (optional)"></textarea>
+        <p style="font-size:12px; color:gray; margin-top:5px;">📅 Date will be added automatically</p>
+        <button class="save-btn" style="background:#28a745;" onclick="submitProof()">✅ Submit Proof</button>
+        <!-- BIG + HIGHLIGHTED View All Proofs button -->
+        <button class="view-proofs-highlight" onclick="openViewProofsFromUpload()">📋 View all proofs 📋</button>
+        <button class="save-btn" style="background:#666; margin-top:8px;" onclick="closeUploadProofPopup()">Cancel</button>
+    </div>
+</div>
+
+<!-- View Proofs Popup (list of donation images) -->
+<div id="viewProofsPopup" class="popup">
+    <div class="popup-box" style="max-width: 500px;">
+        <h2 style="color:#8b5cf6;">📋 Donation Proofs</h2>
+        <div id="proofsList" style="max-height: 400px; overflow-y: auto;"></div>
+        <button class="save-btn" style="background:#666;" onclick="closeViewProofsPopup()">Close</button>
+    </div>
 </div>
 
 <div id="noticePopup" class="popup">
@@ -275,7 +368,7 @@ body.dark .popup-box {background: #1a1a1a; color: #fff;}
             </div>
             <div class="admin-card">
                 <img src="https://i.ibb.co.com/LDdPdJBL/Screenshot-20260418-095221.png" class="admin-img">
-                <div><b>Hridoy Ahmed Omor</b><br>nagement support <br><a href="tel:01766727747" class="admin-call-btn">📞 Call Now</a></div>
+                <div><b>Hridoy Ahmed Omor</b><br>Management support <br><a href="tel:01766727747" class="admin-call-btn">📞 Call Now</a></div>
             </div>
             <div class="admin-card">
                 <img src="https://i.ibb.co.com/kscvchHV/FB-IMG-1776483729557.jpg" class="admin-img">
@@ -296,7 +389,7 @@ body.dark .popup-box {background: #1a1a1a; color: #fff;}
 
 <div id="commentsPopup" class="popup">
     <div class="popup-box">
-        <h2 style="color:#17a2b8;"> Feedback & Suggestions</h2>
+        <h2 style="color:#17a2b8;">💬 Feedback & Suggestions</h2>
         <div id="commentsList" style="max-height: 300px; overflow-y: auto; margin-bottom: 15px;"></div>
         <input type="text" id="commentName" placeholder="Your Name" style="width:100%; margin-bottom:8px;">
         <textarea id="commentMsg" rows="3" placeholder="Write your comment..." style="width:100%; margin-bottom:8px;"></textarea>
@@ -313,6 +406,7 @@ firebase.initializeApp(firebaseConfig);
 const fireDb = firebase.database();
 let isAdmin = false;
 
+// Full location database (all districts + upazilas)
 const locationDB = {
     "Bagerhat": ["Bagerhat Sadar", "Chitalmari", "Fakirhat", "Kachua", "Mollahat", "Mongla", "Morrelganj", "Rampal", "Sarankhola"],
     "Bandarban": ["Bandarban Sadar", "Alikadam", "Lama", "Naikhongchhari", "Rowangchhari", "Ruma", "Thanchi"],
@@ -396,7 +490,6 @@ function loadRegUpazila(){
     if(rDist.value && locationDB[rDist.value]) locationDB[rDist.value].sort().forEach(u => rUpz.add(new Option(u, u)));
 }
 
-// Updated saveDonor with Duplicate and 11-digit check
 function saveDonor(){
     let name=document.getElementById("name").value.trim(), 
         phone=document.getElementById("phone").value.trim(), 
@@ -406,29 +499,13 @@ function saveDonor(){
         last=document.getElementById("lastDonate").value;
 
     if(!name || !phone || !dist || !upz || !group){ alert("Please fill all fields!"); return; }
-    
-    // Bangladeshi 11 digit number check
     const phonePattern = /^01[3-9]\d{8}$/;
-    if(!phonePattern.test(phone)){
-        alert("Please enter a valid 11-digit Bangladeshi mobile number (e.g. 01712345678)");
-        return;
-    }
-
-    // Check for Duplicated Number in Firebase
+    if(!phonePattern.test(phone)){ alert("Please enter a valid 11-digit Bangladeshi mobile number (e.g. 01712345678)"); return; }
     fireDb.ref("donors").orderByChild("phone").equalTo(phone).once("value", snapshot => {
-        if (snapshot.exists()) {
-            alert("This phone number is already registered!");
-        } else {
+        if (snapshot.exists()) alert("This phone number is already registered!");
+        else {
             fireDb.ref("donors").push({ name, phone, address: `${upz}, ${dist}`, bloodGroup: group, lastDonate: last, time: Date.now() })
-            .then(()=>{ 
-                alert("Registered Successfully!"); 
-                document.getElementById("name").value=""; 
-                document.getElementById("phone").value=""; 
-                document.getElementById("lastDonate").value=""; 
-                document.getElementById("bloodGroup").value=""; 
-                document.getElementById("regDist").value=""; 
-                document.getElementById("regUpz").innerHTML='<option value="">Select Upazila</option>'; 
-            })
+            .then(()=>{ alert("Registered Successfully!"); document.getElementById("name").value=""; document.getElementById("phone").value=""; document.getElementById("lastDonate").value=""; document.getElementById("bloodGroup").value=""; document.getElementById("regDist").value=""; document.getElementById("regUpz").innerHTML='<option value="">Select Upazila</option>'; })
             .catch(e=>alert(e));
         }
     });
@@ -436,8 +513,9 @@ function saveDonor(){
 
 function escapeHtml(str){ if(!str) return ""; return str.replace(/[&<>]/g, m=>({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
 
+let allDonorsArray = [];
 fireDb.ref("donors").on("value", snap => {
-    let list = document.getElementById("donorList"); list.innerHTML = "";
+    allDonorsArray = [];
     let stats = {"A+":0,"A-":0,"B+":0,"B-":0,"O+":0,"O-":0,"AB+":0,"AB-":0};
     let total = 0;
     snap.forEach(c => {
@@ -445,91 +523,94 @@ fireDb.ref("donors").on("value", snap => {
         let bg = d.bloodGroup || "N/A";
         if(stats.hasOwnProperty(bg)) stats[bg]++;
         total++;
-        let card = document.createElement("div"); card.className = "donor-card";
-        card.setAttribute("data-blood", bg);
-        let addrParts = (d.address || "").split(",");
-        card.setAttribute("data-dist", addrParts[1]?addrParts[1].trim():"");
-        card.setAttribute("data-upz", addrParts[0]?addrParts[0].trim():"");
-        let deleteBtn = isAdmin ? `<button class="delete-btn" style="background:#dc3545; color:white; width:100%; border:none; margin-top:5px; padding:8px; border-radius:8px;" onclick="deleteDonor('${c.key}')">Delete</button>` : "";
-        card.innerHTML = `
-            <div class="blood-badge">${escapeHtml(bg)}</div>
-            <b style="font-size:18px;">${escapeHtml(d.name)}</b><br>
-            📍 ${escapeHtml(d.address)}<br>
-            📅 Last Donate: ${escapeHtml(d.lastDonate) || "Never"}
-            <button class="call-btn" onclick="window.location='tel:${escapeHtml(d.phone)}'">📞 Call Now</button>
-            ${deleteBtn}
-        `;
-        list.appendChild(card);
+        allDonorsArray.push({ id: c.key, ...d });
     });
     let gsDiv = document.getElementById("groupStats");
     if(gsDiv){
         let html = `<div class="dash-stat-card dash-total"><span>${total}</span><small>Total Donors</small></div>`;
-        for(let g in stats){
-            html += `<div class="dash-stat-card"><span>${stats[g]}</span><small>${g}</small></div>`;
-        }
+        for(let g in stats) html += `<div class="dash-stat-card"><span>${stats[g]}</span><small>${g}</small></div>`;
         gsDiv.innerHTML = html;
     }
-    filterDonors();
 });
 
-function filterDonors(){
-    let blood = document.getElementById("searchBlood").value, dist = document.getElementById("searchDist").value, upz = document.getElementById("searchUpz").value;
-    let cards = document.querySelectorAll(".donor-card"), count=0;
-    cards.forEach(card => {
-        let match = (blood==="" || card.getAttribute("data-blood")===blood) && (dist==="" || card.getAttribute("data-dist")===dist) && (upz==="" || card.getAttribute("data-upz")===upz);
-        card.style.display = match ? "block" : "none";
-        if(match) count++;
-    });
-    document.getElementById("listTitle").innerText = `Found Donors (${count})`;
-}
-
-function postComment(){
-    let name = document.getElementById("commentName").value.trim();
-    let msg = document.getElementById("commentMsg").value.trim();
-    if(!name || !msg){ alert("Please enter your name and comment!"); return; }
-    fireDb.ref("comments").push({
-        name: name,
-        message: msg,
-        timestamp: Date.now()
-    }).then(()=>{
-        document.getElementById("commentName").value = "";
-        document.getElementById("commentMsg").value = "";
-        alert("Thank you! Your comment has been posted.");
-    }).catch(e=>alert(e));
-}
-
-function deleteComment(key){
-    if(confirm("Delete this comment?")){
-        fireDb.ref("comments/"+key).remove();
+function showDonorsInPopup(donors, title) {
+    const popupList = document.getElementById("popupDonorList");
+    document.getElementById("popupDonorTitle").innerText = title;
+    popupList.innerHTML = "";
+    if(donors.length === 0) popupList.innerHTML = "<p style='text-align:center;'>No donors found.</p>";
+    else {
+        donors.forEach(d => {
+            let card = document.createElement("div");
+            card.className = "donor-card";
+            let deleteBtn = isAdmin ? `<button class="delete-btn" style="background:#dc3545; color:white; width:100%; border:none; margin-top:5px; padding:8px; border-radius:8px;" onclick="deleteDonor('${d.id}')">Delete</button>` : "";
+            card.innerHTML = `<div class="blood-badge">${escapeHtml(d.bloodGroup)}</div><b style="font-size:18px;">${escapeHtml(d.name)}</b><br>📍 ${escapeHtml(d.address)}<br>📅 Last Donate: ${escapeHtml(d.lastDonate) || "Never"}<button class="call-btn" onclick="window.location='tel:${escapeHtml(d.phone)}'">📞 Call Now</button>${deleteBtn}`;
+            popupList.appendChild(card);
+        });
     }
+    document.getElementById("donorListPopup").style.display = "flex";
 }
+function viewAllDonorsPopup(){ showDonorsInPopup(allDonorsArray, "All Donors"); }
+function searchAndShowPopup() {
+    let blood = document.getElementById("searchBlood").value;
+    let dist = document.getElementById("searchDist").value;
+    let upz = document.getElementById("searchUpz").value;
+    let filtered = allDonorsArray.filter(d => {
+        let addrParts = (d.address || "").split(",");
+        let donorDist = addrParts[1] ? addrParts[1].trim() : "";
+        let donorUpz = addrParts[0] ? addrParts[0].trim() : "";
+        return (blood === "" || d.bloodGroup === blood) && (dist === "" || donorDist === dist) && (upz === "" || donorUpz === upz);
+    });
+    showDonorsInPopup(filtered, `Found ${filtered.length} Donors`);
+}
+function closeDonorListPopup(){ document.getElementById("donorListPopup").style.display = "none"; }
 
+// Proofs functions
+function openUploadProofPopup(){ document.getElementById("uploadProofPopup").style.display = "flex"; }
+function closeUploadProofPopup(){ document.getElementById("uploadProofPopup").style.display = "none"; }
+function submitProof(){
+    let name = document.getElementById("proofName").value.trim();
+    let imageLink = document.getElementById("proofImageLink").value.trim();
+    let note = document.getElementById("proofNote").value.trim();
+    if (!name) { alert("Please enter your name!"); return; }
+    if (!imageLink || !imageLink.startsWith("http")) { alert("Valid image link (URL) required!"); return; }
+    fireDb.ref("proofs").push({ name, imageUrl: imageLink, note, date: new Date().toLocaleString(), timestamp: Date.now() })
+    .then(()=>{ alert("Proof submitted!"); closeUploadProofPopup(); })
+    .catch(e=>alert(e.message));
+}
+function openViewProofsFromUpload(){ closeUploadProofPopup(); openViewProofsPopup(); }
+function openViewProofsPopup(){ document.getElementById("viewProofsPopup").style.display = "flex"; loadProofs(); }
+function closeViewProofsPopup(){ document.getElementById("viewProofsPopup").style.display = "none"; }
+function loadProofs(){
+    fireDb.ref("proofs").orderByChild("timestamp").once("value", snap => {
+        let container = document.getElementById("proofsList");
+        container.innerHTML = "";
+        let proofs = []; snap.forEach(c=>{ let p=c.val(); p.key=c.key; proofs.push(p); });
+        proofs.reverse();
+        if(proofs.length===0){ container.innerHTML="<p style='text-align:center;'>No donation proofs yet.</p>"; return; }
+        proofs.forEach(p=>{
+            let delBtn = isAdmin ? `<button class="delete-proof-btn" onclick="deleteProof('${p.key}')">🗑️ Delete</button>` : "";
+            container.innerHTML += `<div class="proof-item"><div class="proof-name">📸 ${escapeHtml(p.name)}</div><div class="proof-time">${escapeHtml(p.date)}</div>${p.note ? `<div class="proof-text">💬 ${escapeHtml(p.note)}</div>` : ""}<img src="${escapeHtml(p.imageUrl)}" class="proof-image" onerror="this.style.display='none'">${delBtn}</div>`;
+        });
+    });
+}
+function deleteProof(key){ if(confirm("Delete proof?")) fireDb.ref("proofs/"+key).remove().then(()=>loadProofs()); }
+
+// Comments & admin etc.
+function postComment(){
+    let name = document.getElementById("commentName").value.trim(), msg = document.getElementById("commentMsg").value.trim();
+    if(!name || !msg){ alert("Name and comment required!"); return; }
+    fireDb.ref("comments").push({ name, message: msg, timestamp: Date.now() }).then(()=>{ document.getElementById("commentName").value=""; document.getElementById("commentMsg").value=""; alert("Comment posted!"); });
+}
+function deleteComment(key){ if(confirm("Delete comment?")) fireDb.ref("comments/"+key).remove(); }
 fireDb.ref("comments").orderByChild("timestamp").on("value", snap => {
     let container = document.getElementById("commentsList");
     if(!container) return;
     container.innerHTML = "";
-    let comments = [];
-    snap.forEach(c => {
-        let com = c.val();
-        com.key = c.key;
-        comments.push(com);
-    });
+    let comments = []; snap.forEach(c=>{ let com=c.val(); com.key=c.key; comments.push(com); });
     comments.reverse();
-    comments.forEach(com => {
-        let date = new Date(com.timestamp).toLocaleString();
-        let deleteBtn = isAdmin ? `<button class="delete-comment-btn" onclick="deleteComment('${com.key}')">🗑️ Delete</button>` : "";
-        container.innerHTML += `
-            <div class="comment-item">
-                <div class="comment-name">${escapeHtml(com.name)}</div>
-                <div class="comment-time">${date}</div>
-                <div class="comment-text">${escapeHtml(com.message)}</div>
-                ${deleteBtn}
-            </div>
-        `;
-    });
-    if(comments.length === 0) container.innerHTML = "<p style='text-align:center;'>No comments yet. Be the first to share your feedback!</p>";
+    comments.forEach(com=>{ let date = new Date(com.timestamp).toLocaleString(); let deleteBtn = isAdmin ? `<button class="delete-comment-btn" onclick="deleteComment('${com.key}')">🗑️ Delete</button>` : ""; container.innerHTML += `<div class="comment-item"><div class="comment-name">${escapeHtml(com.name)}</div><div class="comment-time">${date}</div><div class="comment-text">${escapeHtml(com.message)}</div>${deleteBtn}</div>`; });
+    if(comments.length===0) container.innerHTML = "<p style='text-align:center;'>No comments yet.</p>";
 });
-
 function toggleDark(){ document.body.classList.toggle("dark"); }
 function openAdmin(){ document.getElementById("admin").style.display="flex"; }
 function closeAdmin(){ document.getElementById("admin").style.display="none"; }
@@ -539,11 +620,9 @@ function openNotice(){ document.getElementById("noticePopup").style.display="fle
 function closeNotice(){ document.getElementById("noticePopup").style.display="none"; }
 function openComments(){ document.getElementById("commentsPopup").style.display="flex"; }
 function closeComments(){ document.getElementById("commentsPopup").style.display="none"; }
-
-function secretAdminTrigger(){ if(prompt("Admin Password:") === "3358"){ isAdmin=true; document.getElementById("adminAuthArea").style.display="none"; document.getElementById("adminControls").style.display="block"; fireDb.ref("donors").once("value"); alert("Admin Mode Active"); } else alert("Wrong password!"); }
-function logoutAdmin(){ isAdmin=false; fireDb.ref("donors").once("value"); alert("Admin mode off"); }
+function secretAdminTrigger(){ if(prompt("Admin Password:") === "3358"){ isAdmin=true; document.getElementById("adminAuthArea").style.display="none"; document.getElementById("adminControls").style.display="block"; alert("Admin Mode Active"); loadProofs(); } else alert("Wrong password!"); }
+function logoutAdmin(){ isAdmin=false; alert("Admin mode off"); location.reload(); }
 function deleteDonor(k){ if(confirm("Delete this donor?")) fireDb.ref("donors/"+k).remove(); }
-
 window.onload = () => { loadSearchUpazila(); loadRegUpazila(); };
 </script>
 </body>
